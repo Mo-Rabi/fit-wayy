@@ -4,7 +4,7 @@ import userRoutes from "./modules/user/user.routes.js";
 import trainerRoutes from "./modules/trainer/trainer.routes.js";
 import "dotenv/config.js";
 const app = express();
-const port = 3000;
+const port = 4800;
 
 //Start a connection to DB
 initConnection();
