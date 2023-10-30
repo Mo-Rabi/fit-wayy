@@ -5,7 +5,8 @@ import "dotenv/config.js";
 const app = express();
 const port = 3000;
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+//Start a connection to DB
+initConnection();
 
 // parse application/json, basically parse incoming Request Object as a JSON Object
 app.use(express.json());
@@ -18,5 +19,4 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(userRoutes);
 
-//Start a connection to DB
-initConnection();
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));

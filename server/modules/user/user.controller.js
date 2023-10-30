@@ -1,3 +1,6 @@
+import userModel from "../../db/model/user.model.js";
+import trainerModel from "../../db/model/trainer.model.js";
+
 //? Retrieve all users
 const getAllUsers = async (req, res) => {
   res.send("All users");
@@ -8,7 +11,12 @@ const getAllUsers = async (req, res) => {
 //? Signup
 const signUp = async (req, res) => {
   try {
-    res.send("All users");
+    let addedUser = await userModel.insertMany(req.body);
+    res.json({
+      message:
+        "Sign up successful, please check your email to verify your account",
+      addedUser,
+    });
   } catch (error) {
     console.log("Signup Error: ", error);
   }
