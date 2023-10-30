@@ -24,6 +24,7 @@ const trainerSchema = new mongoose.Schema(
     height: { type: String, required: true },
     rating: { type: String, default: "" },
     trainees: { type: Array, default: [] },
+    plans: { type: Array, default: [] },
     password: {
       type: String,
       required: true,
@@ -43,6 +44,6 @@ const trainerSchema = new mongoose.Schema(
   }
 );
 
-const trainerModel = mongoose.model("User", trainerSchema);
+const trainerModel = mongoose.model("Trainer", trainerSchema);
 
 export default trainerModel;

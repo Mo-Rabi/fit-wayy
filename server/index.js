@@ -1,6 +1,7 @@
 import express from "express";
 import { initConnection } from "./db/connection.js";
 import userRoutes from "./modules/user/user.routes.js";
+import trainerRoutes from "./modules/trainer/trainer.routes.js";
 import "dotenv/config.js";
 const app = express();
 const port = 3000;
@@ -18,5 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 //app.use(express.urlencoded({ extended: true }));
 
 app.use(userRoutes);
+app.use(trainerRoutes);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
