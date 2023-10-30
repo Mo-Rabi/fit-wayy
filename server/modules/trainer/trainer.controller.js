@@ -1,59 +1,59 @@
-import userModel from "../../db/model/user.model.js";
+import trainerModel from "../../db/model/trainer.model.js";
 
-//? Retrieve all users
-const getAllUsers = async (req, res) => {
-  res.send("All users");
-  //   let viewUsers = await userModel.find();
-  //   res.json({ message: "Here's a list of all users", viewUsers });
+//? Retrieve all trainers
+const getAllTrainers = async (req, res) => {
+  res.send("All trainers");
+  //   let viewTrainers = await trainerModel.find();
+  //   res.json({ message: "Here's a list of all trainers", viewTrainers });
 };
 
 //? Signup
 const signUp = async (req, res) => {
   try {
-    let addedUser = await userModel.insertMany(req.body);
+    let addedTrainer = await trainerModel.insertMany(req.body);
     res.json({
       message:
         "Sign up successful, please check your email to verify your account",
-      addedUser,
+      addedTrainer,
     });
   } catch (error) {
     console.log("Signup Error: ", error);
   }
 };
 
-//? Edit User Details
-const updateUser = async (req, res) => {
+//? Edit Trainer Details
+const updateTrainer = async (req, res) => {
   try {
     res.status(200).json({
-      message: "User Details were updatd successfully",
-      updateUserDetais,
+      message: "Trainer Details were updatd successfully",
+      updateTrainerDetais,
     });
   } catch (error) {
-    res.status(400).json({ message: "Updating User Error: ", error });
+    res.status(400).json({ message: "Updating Trainer Error: ", error });
   }
 };
 
-//? Deactivate User (Soft Delete)
+//? Deactivate Trainer (Soft Delete)
 const deactivateAccount = async (req, res) => {
   try {
     res.status(200).json({
-      message: "User account is deactivated successfully ",
-      softDeletedUser,
+      message: "Trainer account is deactivated successfully ",
+      softDeletedTrainer,
     });
   } catch (error) {
-    res.status(400).json({ message: "Deactivating User Error: ", error });
+    res.status(400).json({ message: "Deactivating Trainer Error: ", error });
   }
 };
 
-//? Delete User Account Permanently (Hard Delete)
+//? Delete Trainer Account Permanently (Hard Delete)
 const deleteAccount = async (req, res) => {
   try {
     res.status(200).json({
-      message: "User account is permanently deleted",
-      hardDeletedUser,
+      message: "Trainer account is permanently deleted",
+      hardDeletedTrainer,
     });
   } catch (error) {
-    res.status(400).json({ message: "Deleting User Error: ", error });
+    res.status(400).json({ message: "Deleting Trainer Error: ", error });
   }
 };
 
@@ -79,9 +79,9 @@ const logout = (req, res) => {
 };
 
 export {
-  getAllUsers,
+  getAllTrainers,
   signUp,
-  updateUser,
+  updateTrainer,
   deactivateAccount,
   deleteAccount,
   resetPassword,

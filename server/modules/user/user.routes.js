@@ -16,24 +16,24 @@ userRoutes.get("/users", getAllUsers);
 
 //? Add User
 userRoutes.post(
-  "/register",
+  "/users/register",
   //validation(signUpValidationSchema),
   signUp
 );
 
 //?Edit User Details
-userRoutes.patch("/editUser", updateUser);
+userRoutes.patch("/users/edit", updateUser);
 
 //? Password Reset
-userRoutes.put("/resetPassword", resetPassword);
+userRoutes.put("/users/resetPassword", resetPassword);
 
 //? Deactivate User (Soft Delete)
-userRoutes.delete("/deactivateAccount", deactivateAccount);
+userRoutes.delete("/users/deactivateAccount", deactivateAccount);
 
 //? Delete User Account Permanently (Hard Delete)
-userRoutes.delete("deleteAccount", deleteAccount);
+userRoutes.delete("/users/deleteAccount", deleteAccount);
 
 //? Logout
-userRoutes.get("/logout", logout);
+userRoutes.get("/users/logout", logout);
 
 export default userRoutes;
