@@ -5,6 +5,7 @@ import Layout from "./components/Layout/Layout";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Calories from "./components/Calories/Calories";
 
 function App() {
   const routes = createBrowserRouter([
@@ -15,6 +16,10 @@ function App() {
         {
           path: "register",
           element: <Register />,
+        },
+        {
+          path: "calories",
+          element: <Calories />,
         },
       ],
     },
