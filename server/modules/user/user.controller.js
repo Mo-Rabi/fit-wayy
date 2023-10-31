@@ -1,5 +1,8 @@
 import userModel from "../../db/model/user.model.js";
-
+import bcrypt from "bcrypt";
+import { signInSchem, signUpValidationSchema } from "./user.validation.js";
+import jwt from "jsonwebtoken";
+import { sendToEmail } from "../../utils/sendEmail.js";
 //? Retrieve all users
 const getAllUsers = async (req, res) => {
   res.send("All users");
@@ -7,20 +10,108 @@ const getAllUsers = async (req, res) => {
   //   res.json({ message: "Here's a list of all users", viewUsers });
 };
 
-//? Signup
+//? User Signup
 const signUp = async (req, res) => {
   try {
-    let addedUser = await userModel.insertMany(req.body);
-    res.json({
-      message:
-        "Sign up successful, please check your email to verify your account",
-      addedUser,
+    let { error } = signUpValidationSchema.validate(req.body, {
+      abortEarly: false,
     });
+    if (error) {
+      res.status(400).json({ message: "Validation error", error });
+    } else {
+      let { email } = req.body;
+      let foundUser = await userModel.findOne({ email: email });
+      foundUser && res.status(409).json({ message: "Email already exists" });
+      console.log(foundUser);
+      if (!foundUser) {
+        let hashedPassword = bcrypt.hashSync(req.body.password, 10);
+        let addedUser = await userModel.create({
+          ...req.body,
+          password: hashedPassword,
+        });
+
+        const token = jwt.sign({ id: addedUser._id }, "secret_key", {
+          expiresIn: "30d",
+        });
+        sendToEmail(req.body.email, token);
+        res.status(201).json({
+          message: "SignUp successful, please check your email",
+          addedUser,
+          token,
+        });
+      }
+    }
   } catch (error) {
     console.log("Signup Error: ", error);
   }
 };
 
+//? User Signup Verification
+const userSignUpVerification = async (req, res) => {
+  try {
+    const payload = jwt.verify(req.params.token, "secret_key");
+    // Set isVerified to true in DB
+    const user = await userModel.findByIdAndUpdate(
+      payload.id,
+      {
+        isVerified: true,
+      },
+      { new: true }
+    );
+    console.log("User Verified: ", user);
+
+    // Redirect user to login page or send a response
+    res.json({ message: "Email verification successful. You can now log in." });
+  } catch (error) {
+    console.log("User Signup Verification Error: ", error);
+  }
+};
+
+//? User Signin
+const signIn = async (req, res) => {
+  try {
+    console.log(req.body.email);
+    let { error } = signInSchem.validate(req.body);
+    if (error) {
+      res
+        .status(400)
+        .json({ message: "SignIn Schema Validation Error: ", error });
+    } else {
+      let foundUser = await userModel.findOne({ email: req.body.email });
+      if (!foundUser) {
+        res
+          .status(404)
+          .json({ message: "User not found, You need to create an account" });
+      } else if (foundUser.isVerified === false) {
+        res
+          .status(404)
+          .json({ message: "Please check your email to verify your account" });
+      } else if (foundUser.isVerified === true) {
+        console.log("Found User? ", foundUser);
+        let matched = bcrypt.compareSync(req.body.password, foundUser.password);
+        console.log("Passwords match?", matched);
+
+        if (matched) {
+          let token = jwt.sign({ id: foundUser.id }, "SecretKeyCanBeAnything", {
+            expiresIn: "30d", // when expired you cannot access /profile
+          });
+          console.log(token);
+          //! Sitting the token in the response cookiesafter successful login
+          res.cookie(
+            "token",
+            token, //?res.cookie(name, value [, options])
+            { httpOnly: true }
+          );
+          res.status(200).json({ message: "You're logged in :)", token });
+        } else {
+          res.status(404).json({ message: "Please check your password" });
+        }
+      }
+    }
+  } catch (error) {
+    console.log("Signup Error: ", error);
+  }
+};
 //? Edit User Details
 const updateUser = async (req, res) => {
   try {
@@ -86,4 +177,6 @@ export {
   deleteAccount,
   resetPassword,
   logout,
+  signIn,
+  userSignUpVerification,
 };

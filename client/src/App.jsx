@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Layout from "./components/Layout/Layout";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
+import Profile from "./components/Profile/Profile";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 function App() {
@@ -15,6 +16,14 @@ function App() {
         {
           path: "register",
           element: <Register />,
+        },
+        {
+          path: "login",
+          element: <Login />,
+        },
+        {
+          path: "profile",
+          element: <Profile />,
         },
       ],
     },

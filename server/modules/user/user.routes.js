@@ -7,18 +7,29 @@ import {
   deleteAccount,
   resetPassword,
   logout,
+  signIn,
+  userSignUpVerification
 } from "./user.controller.js";
+import { signInSchem, signUpValidationSchema } from "./user.validation.js";
+import { validation } from "../../middleware/validation.js";
 
 const userRoutes = express.Router();
 
 //?Get All Users
 userRoutes.get("/users", getAllUsers);
 
-//? Add User
+//? User Signup
+userRoutes.post("/users/register", validation(signUpValidationSchema), signUp);
+
+//? User Verification after Signup
+userRoutes.get("/user/verify/:token", userSignUpVerification);
+
+//? Login User
 userRoutes.post(
-  "/users/register",
-  //validation(signUpValidationSchema),
-  signUp
+  "/users/login",
+  validation(signInSchem),
+  signIn
+  // authenticateTokenCookie
 );
 
 //?Edit User Details

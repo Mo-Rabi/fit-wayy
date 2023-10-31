@@ -3,9 +3,11 @@ import { initConnection } from "./db/connection.js";
 import userRoutes from "./modules/user/user.routes.js";
 import trainerRoutes from "./modules/trainer/trainer.routes.js";
 import "dotenv/config.js";
-const app = express();
-const port = 4800;
+import cors from "cors";
 
+const app = express();
+const port = 4000;
+app.use(cors()); //?app.use(cors({ origin: "*" })); allows all requests from anywhere to my server
 //Start a connection to DB
 initConnection();
 
