@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { signInSchem, signUpValidationSchema } from "./user.validation.js";
 import jwt from "jsonwebtoken";
 import { sendToEmail } from "../../utils/sendEmail.js";
+
 //? Retrieve all users
 const getAllUsers = async (req, res) => {
   res.send("All users");
@@ -17,11 +18,12 @@ const signUp = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      res.status(400).json({ message: "Validation error", error });
+      res.status(400).json({ message: "User Validation error", error });
     } else {
       let { email } = req.body;
       let foundUser = await userModel.findOne({ email: email });
-      foundUser && res.status(409).json({ message: "Email already exists" });
+      foundUser &&
+        res.status(409).json({ message: "User Email already exists" });
       console.log(foundUser);
       if (!foundUser) {
         let hashedPassword = bcrypt.hashSync(req.body.password, 10);
@@ -33,9 +35,10 @@ const signUp = async (req, res) => {
         const token = jwt.sign({ id: addedUser._id }, "secret_key", {
           expiresIn: "30d",
         });
-        sendToEmail(req.body.email, token);
+        const userType = "user";
+        sendToEmail(req.body.email, token, userType);
         res.status(201).json({
-          message: "SignUp successful, please check your email",
+          message: "User SignUp successful, please check your email",
           addedUser,
           token,
         });
@@ -61,7 +64,9 @@ const userSignUpVerification = async (req, res) => {
     console.log("User Verified: ", user);
 
     // Redirect user to login page or send a response
-    res.json({ message: "Email verification successful. You can now log in." });
+    res.json({
+      message: "User Email verification successful. You can now log in.",
+    });
   } catch (error) {
     console.log("User Signup Verification Error: ", error);
   }
@@ -75,7 +80,7 @@ const signIn = async (req, res) => {
     if (error) {
       res
         .status(400)
-        .json({ message: "SignIn Schema Validation Error: ", error });
+        .json({ message: "User SignIn Schema Validation Error: ", error });
     } else {
       let foundUser = await userModel.findOne({ email: req.body.email });
       if (!foundUser) {
@@ -85,7 +90,9 @@ const signIn = async (req, res) => {
       } else if (foundUser.isVerified === false) {
         res
           .status(404)
-          .json({ message: "Please check your email to verify your account" });
+          .json({
+            message: "Please check your User email to verify your account",
+          });
       } else if (foundUser.isVerified === true) {
         console.log("Found User? ", foundUser);
         let matched = bcrypt.compareSync(req.body.password, foundUser.password);
@@ -102,14 +109,16 @@ const signIn = async (req, res) => {
             token, //?res.cookie(name, value [, options])
             { httpOnly: true }
           );
-          res.status(200).json({ message: "You're logged in :)", token });
+          res
+            .status(200)
+            .json({ message: "User logged in successfully", token });
         } else {
-          res.status(404).json({ message: "Please check your password" });
+          res.status(404).json({ message: "Please check your User password" });
         }
       }
     }
   } catch (error) {
-    console.log("Signup Error: ", error);
+    console.log("User Signin Error: ", error);
   }
 };
 //? Edit User Details

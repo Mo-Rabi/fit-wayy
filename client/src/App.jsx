@@ -2,9 +2,12 @@ import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Layout from "./components/Layout/Layout";
-import Register from "./components/Register/Register";
-import Login from "./components/Login/Login";
-import Profile from "./components/Profile/Profile";
+import UserSignup from "./components/UserSignup/UserSignup";
+import UserLogin from "./components/UserLogin/UserLogin";
+import UserProfile from "./components/UserProfile/UserProfile";
+import TrainerSignup from './components/TrainerSignup/TrainerSignup'
+import TrainerLogin from './components/TrainerLogin/TrainerLogin'
+import TrainerProfile from "./components/TrainerProfile/TrainerProfile";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 function App() {
@@ -14,16 +17,28 @@ function App() {
       element: <Layout />,
       children: [
         {
-          path: "register",
-          element: <Register />,
+          path: "trainers/register",
+          element: <TrainerSignup />,
         },
         {
-          path: "login",
-          element: <Login />,
+          path: "trainers/login",
+          element: <TrainerLogin />,
         },
         {
-          path: "profile",
-          element: <Profile />,
+          path: "users/register",
+          element: <UserSignup />,
+        },
+        {
+          path: "users/login",
+          element: <UserLogin />,
+        },
+        {
+          path: "user/profile",
+          element: <UserProfile />,
+        },
+        {
+          path: "trainer/profile",
+          element: <TrainerProfile />,
         },
       ],
     },

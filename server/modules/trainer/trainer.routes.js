@@ -7,16 +7,31 @@ import {
   deleteAccount,
   resetPassword,
   logout,
+  signIn,
+  trainerSignUpVerification,
 } from "./trainer.controller.js";
+import { validation } from "../../middleware/validation.js";
+import { signInSchem, signUpValidationSchema } from "./trainer.validation.js";
+
 const trainerRoutes = express.Router();
 //?Get All Trainers
 trainerRoutes.get("/trainers", getAllTrainers);
 
-//? Add Trainer
+//? Trainer Signup
 trainerRoutes.post(
   "/trainers/register",
   //validation(signUpValidationSchema),
   signUp
+);
+//? Trainer Verification after Signup
+trainerRoutes.get("/trainer/verify/:token", trainerSignUpVerification);
+
+//? Login Trainer
+trainerRoutes.post(
+  "/trainers/login",
+  validation(signInSchem),
+  signIn
+  // authenticateTokenCookie
 );
 
 //?Edit Trainer Details

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Login.module.css";
+import styles from './TrainerLogin.module.css'
 import * as Yup from "yup";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -11,7 +11,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 
-export default function Login() {
+export default function TrainerLogin() {
   let navigate = useNavigate();
   let [isLoading, setIsLoading] = useState(false);
   let [apiResponse, setAPIResponse] = useState({ message: "", status: "" });
@@ -24,20 +24,23 @@ export default function Login() {
       console.log(values);
       setIsLoading(true);
       let response = await axios.post(
-        "http://localhost:4000/users/login",
+        "http://localhost:4000/trainers/login",
         values
       );
       setIsLoading(false);
-
       let { token } = response.data;
       console.log("Token: " + token);
       //TODO Migrate from local storage to fully rely on httpOnly cookies //TODO
       //! set the httpOnly token in local storage temporarily
       localStorage.setItem("token", token);
+      let { id } = jwtDecode(token);
+      console.log("ID: ", id);
       //setAPIResponse({ message: data.message, status: "success" });
       //localStorage.setItem("userToken", data.token);
       //setToken(data.token);
-      navigate("/profile");
+      
+        navigate("/trainer/profile");
+      
     } catch (error) {
       //console.log("Error: " + err);
       // console.log(err.response.data.error);
@@ -189,7 +192,7 @@ export default function Login() {
           </button> */}
           <h6 className="text-center">
             Don't have an account?
-            <Link to={"/register"} className="link-dark fw-bold">
+            <Link to={"/trainers/register"} className="link-dark fw-bold">
               Register
             </Link>
           </h6>

@@ -1,6 +1,6 @@
 import { createTransport } from "nodemailer";
 
-export const sendToEmail = async (email, token) => {
+export const sendToEmail = async (email, token, userType) => {
   const transporter = createTransport({
     service: "gmail",
     auth: {
@@ -9,7 +9,7 @@ export const sendToEmail = async (email, token) => {
     },
   });
 
-  const link = `http://localhost:4000/user/verify/${token}`;
+  const link = `http://localhost:4000/${userType}/verify/${token}`;
 
   const info = await transporter.sendMail({
     from: '"Mo Rabi" <mostafa.rapi3@gmail.com>', // sender address

@@ -8,7 +8,7 @@ import {
   resetPassword,
   logout,
   signIn,
-  userSignUpVerification
+  userSignUpVerification,
 } from "./user.controller.js";
 import { signInSchem, signUpValidationSchema } from "./user.validation.js";
 import { validation } from "../../middleware/validation.js";

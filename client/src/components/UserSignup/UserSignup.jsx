@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Register.module.css";
+import styles from "./UserSignup.module.css";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,8 +7,9 @@ import * as yup from "yup";
 import "@fortawesome/fontawesome-free/css/all.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
-export default function Register() {
+export default function UserSignup() {
   const schema = yup.object({
     firstName: yup
       .string()
@@ -40,20 +41,29 @@ export default function Register() {
       .required("Required")
       .matches(/^01[0125][0-9]{8}$/, "Invalid phone number"),
     age: yup
-      .number("Must be a number")
+      .number()
+      .typeError("Must provide a number")
       .required("Required")
-      .positive("Positive number only")
+      .min(18, "Must be 18+")
+      .max(100, "Must be less than 100")
       .integer(),
     gender: yup.string().required("Required"),
     height: yup
-      .number("Must be a number")
+      .number()
+      .typeError("Must be a number")
       .required("Required")
       .positive("Positive number only")
+      .min(50, "Must be more than 50cm")
+      .max(250, "Must be less than 250cm")
       .integer(),
     weight: yup
-      .number("Must be a number")
+      .number()
+      .typeError("Must be a number")
+
       .required("Required")
       .positive("Positive number only")
+      .min(5, "Must be more than 5kg")
+      .max(650, "Must be less than 635kg")
       .integer(),
     picture: yup.string(),
   });
@@ -92,21 +102,14 @@ export default function Register() {
   const onSubmit = async (data) => {
     // async request which may result error
     try {
-      console.log(data);
-      // await fetch()
       let response = await axios.post(
         "http://localhost:4000/users/register",
         data
       );
-      console.log("Response: ", response);
       setApiResponse(response.data.message);
     } catch (error) {
-      // handle your error
-      console.log("Error: ", error);
-      //let errorMsg = error.response.data.message;
-      //console.log("ErrorMsg: ", errorMsg);
-      // Set the error message in state or a variable that can be accessed in the JSX
-      //setApiResponse(errorMsg);
+      let errorMsg = error.response.data.message;
+      setApiResponse(errorMsg);
     }
   };
   // console.log(touchedFields, dirtyFields);
@@ -117,13 +120,13 @@ export default function Register() {
     <div className="mt-5">
       <div className="d-flex justify-content-center">
         <div className="col-md-5">
-          {ApiResponse === "SignUp successful, please check your email" ? (
+          {ApiResponse === "User SignUp successful, please check your email" ? (
             <div className="alert alert-success p-1 text-center">
               <i className="fa fa-triangle-exclamation text-success "></i>{" "}
               &nbsp;
               {ApiResponse}
             </div>
-          ) : ApiResponse === "Email already exists" ? (
+          ) : ApiResponse === "User Email already exists" ? (
             <div className="alert alert-danger p-1 text-center">
               <i className="fa fa-triangle-exclamation text-danger "></i>
               &nbsp;
@@ -174,7 +177,6 @@ export default function Register() {
                     First Name
                   </label>
                 </div>
-
                 {/*! Last Name */}
                 <div className="mb-3 form-floating">
                   <input
@@ -195,7 +197,6 @@ export default function Register() {
                     Last Name
                   </label>
                 </div>
-
                 {/*! Email with validation */}
                 <div className="mb-3 form-floating">
                   <input
@@ -222,7 +223,6 @@ export default function Register() {
                     Email
                   </label>
                 </div>
-
                 {/*! Password with validation */}
                 <div className="mb-3 form-floating">
                   <span
@@ -266,7 +266,6 @@ export default function Register() {
                     Password
                   </label>
                 </div>
-
                 {/*! Confirm password with validation */}
                 <div className="mb-3 form-floating">
                   <input
@@ -291,7 +290,6 @@ export default function Register() {
                     Confirm Password
                   </label>
                 </div>
-
                 {/*! Phone Name */}
                 <div className="mb-3 form-floating">
                   <input
@@ -313,26 +311,38 @@ export default function Register() {
                   </label>
                 </div>
 
-                {/*! Gender */}
-                <div className="mb-3 form-floating">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="gender"
-                    name="gender"
-                    placeholder="Gender"
-                    {...register("gender")}
-                  />
-                  {touchedFields.gender && errors.gender?.message ? (
-                    <div className="alert alert-danger p-1 mt-2">
-                      {errors.gender?.message}
-                    </div>
-                  ) : null}
-
-                  <label htmlFor="gender" className="form-label">
-                    Gender
-                  </label>
+                {/* Gender */}
+                <div className="container d-flex">
+                  <p>Gender: </p>
+                  <div className="form-check ms-3 me-3">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="male"
+                      value="male"
+                      id="male"
+                      {...register("gender")}
+                      checked
+                    />
+                    <label className="form-check-label" htmlFor="male">
+                      male
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="female"
+                      id="female"
+                      value="female"
+                      {...register("gender")}
+                    />
+                    <label className="form-check-label" htmlFor="female">
+                      female
+                    </label>
+                  </div>
                 </div>
+
                 {/*! Age  */}
                 <div className="mb-3 form-floating">
                   <input
@@ -393,7 +403,6 @@ export default function Register() {
                     Weight
                   </label>
                 </div>
-
                 <div className="mb-3">
                   <button
                     type="submit"
@@ -406,7 +415,8 @@ export default function Register() {
               </form>
               <DevTool control={control} />
               <p className="text-center">
-                Already have an account? <a href="/login"> Log In</a>
+                Already have an account?{" "}
+                <Link to={"/users/login"}> Log In</Link>
               </p>
             </div>
           </div>
