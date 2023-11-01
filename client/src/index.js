@@ -4,8 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+
+
 
 const googleAuthClientID = process.env.REACT_APP_CLIENT_ID;
 
