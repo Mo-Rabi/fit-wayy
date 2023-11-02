@@ -243,7 +243,7 @@ export default function Footer() {
               <div className="text-sm-start">
                 <p className="mb-0">
                   ©2023 FitWay&nbsp;
-                  <i className="mdi mdi-heart text-danger" /> by
+                  <i className="mdi mdi-heart text-danger" /> by&nbsp; 
                   <a
                     href="https://shreethemes.in/"
                     target="_blank"

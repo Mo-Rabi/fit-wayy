@@ -14,6 +14,12 @@ import "./components/assets/css/bootstrap.min.css";
 import "./components/assets/css/tiny-slider.css";
 import "./components/assets/font/css/materialdesignicons.min.css";
 import "./components/assets/unicons/css/line.css";
+import "./components/assets/swiper/css/swiper.min.css";
+import "./components/assets/sass/_topbar.scss";
+import "./components/assets/js/app";
+import "./components/assets/js/easy_background";
+import "./components/assets/js/plugins.init";
+
 
 function App() {
   const routes = createBrowserRouter([
