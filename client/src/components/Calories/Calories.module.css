@@ -5,7 +5,9 @@ body {
     color: #ffffff;
     background-color: #212529 !important;
 }
-
+.pageContainer{
+    margin-top: 100px;
+}
 #ingredient {
     padding: 12px 20px;
     width: 100%;

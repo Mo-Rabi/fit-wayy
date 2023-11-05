@@ -27,7 +27,7 @@ export default function Exercises() {
   return (
     <div className="container text-light">
       <div className="row mt-5">
-        <h4>Enter the name of the muscle you want to exercise today </h4>
+        <h4 className="mt-5">Enter the name of the muscle you want to exercise today </h4>
         <div className="col-md-6 mt-4">
 
           <div className="input-group mb-5">
