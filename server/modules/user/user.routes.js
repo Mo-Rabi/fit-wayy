@@ -1,28 +1,43 @@
 import express from "express";
 import {
   getAllUsers,
+  getUserData,
   signUp,
   updateUser,
   deactivateAccount,
   deleteAccount,
   resetPassword,
   logout,
+  signIn,
+  userSignUpVerification,
 } from "./user.controller.js";
-
+import { signInSchem, signUpValidationSchema } from "./user.validation.js";
+import { validation } from "../../middleware/validation.js";
+import { authenticateTokenCookie } from "../../middleware/authenticateToken.js";
 const userRoutes = express.Router();
 
 //?Get All Users
 userRoutes.get("/users", getAllUsers);
 
-//? Add User
+//? Get User Details
+userRoutes.get("/userData", getUserData);
+
+//? User Signup
+userRoutes.post("/users/register", validation(signUpValidationSchema), signUp);
+
+//? User Verification after Signup
+userRoutes.get("/user/verify/:token", userSignUpVerification);
+
+//? Login User
 userRoutes.post(
-  "/users/register",
-  //validation(signUpValidationSchema),
-  signUp
+  "/users/login",
+  validation(signInSchem),
+  signIn
+  // authenticateTokenCookie,
 );
 
 //?Edit User Details
-userRoutes.patch("/users/edit", updateUser);
+userRoutes.patch("/user/edit", updateUser);
 
 //? Password Reset
 userRoutes.put("/users/resetPassword", resetPassword);

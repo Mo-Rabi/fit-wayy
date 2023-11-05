@@ -4,12 +4,33 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import "react-bootstrap";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+import {
+  QueryDevtools,
+  ReactQueryDevtools,
+} from "@tanstack/react-query-devtools";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const queryClient = new QueryClient();
+
+const googleAuthClientID = process.env.REACT_APP_CLIENT_ID;
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <GoogleOAuthProvider clientId={googleAuthClientID}>
+        <App />
+      </GoogleOAuthProvider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
