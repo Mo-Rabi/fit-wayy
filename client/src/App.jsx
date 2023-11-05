@@ -5,9 +5,12 @@ import Layout from "./components/Layout/Layout";
 import UserSignup from "./components/UserSignup/UserSignup";
 import UserLogin from "./components/UserLogin/UserLogin";
 import UserProfile from "./components/UserProfile/UserProfile";
+import UserSettings from "./components/UserSettings/UserSettings";
 import TrainerSignup from "./components/TrainerSignup/TrainerSignup";
 import TrainerLogin from "./components/TrainerLogin/TrainerLogin";
 import TrainerProfile from "./components/TrainerProfile/TrainerProfile";
+import TrainerSettings from "./components/TrainerSettings/TrainerSettings"
+import Home from "./components/Home/Home"
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./components/assets/css/style.min.css";
 import "./components/assets/css/bootstrap.min.css";
@@ -20,13 +23,18 @@ import "./components/assets/js/app";
 import "./components/assets/js/easy_background";
 import "./components/assets/js/plugins.init";
 
-
 function App() {
   const routes = createBrowserRouter([
     {
       path: "",
       element: <Layout />,
       children: [
+
+        {
+          path: "",
+          index:true,
+          element: <Home />,
+        },
         {
           path: "trainers/register",
           element: <TrainerSignup />,
@@ -47,10 +55,12 @@ function App() {
           path: "user/profile",
           element: <UserProfile />,
         },
+        { path: "user/settings", element: <UserSettings /> },
         {
           path: "trainer/profile",
           element: <TrainerProfile />,
         },
+        { path: "trainer/settings", element: <TrainerSettings /> },
       ],
     },
   ]);

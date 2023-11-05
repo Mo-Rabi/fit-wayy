@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getAllUsers,
+  getUserData,
   signUp,
   updateUser,
   deactivateAccount,
@@ -12,11 +13,14 @@ import {
 } from "./user.controller.js";
 import { signInSchem, signUpValidationSchema } from "./user.validation.js";
 import { validation } from "../../middleware/validation.js";
-
+import { authenticateTokenCookie } from "../../middleware/authenticateToken.js";
 const userRoutes = express.Router();
 
 //?Get All Users
 userRoutes.get("/users", getAllUsers);
+
+//? Get User Details
+userRoutes.get("/userData", getUserData);
 
 //? User Signup
 userRoutes.post("/users/register", validation(signUpValidationSchema), signUp);
@@ -29,11 +33,11 @@ userRoutes.post(
   "/users/login",
   validation(signInSchem),
   signIn
-  // authenticateTokenCookie
+  // authenticateTokenCookie,
 );
 
 //?Edit User Details
-userRoutes.patch("/users/edit", updateUser);
+userRoutes.patch("/user/edit", updateUser);
 
 //? Password Reset
 userRoutes.put("/users/resetPassword", resetPassword);

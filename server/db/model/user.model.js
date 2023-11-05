@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    title: { type: String, default: "" },
+    description: { type: String, default: "" },
+    city: { type: String, default: "" },
+    country: { type: String, default: "" },
     isVerified: {
       type: Boolean,
       default: false,

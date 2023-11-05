@@ -6,9 +6,33 @@ import { sendToEmail } from "../../utils/sendEmail.js";
 
 //? Retrieve all users
 const getAllUsers = async (req, res) => {
-  res.send("All users");
-  //   let viewUsers = await userModel.find();
-  //   res.json({ message: "Here's a list of all users", viewUsers });
+  try {
+    let viewUsers = await userModel.find();
+    res.json({ message: "Here's a list of all users", viewUsers });
+  } catch (error) {
+    res.json({
+      message: "An Error occured while retrieving All Users Data",
+      error,
+    });
+  }
+};
+
+//? Get User Details
+const getUserData = async (req, res) => {
+  try {
+    let token = req.headers.authorization;
+    console.log("TOKEEEEN", token);
+    const decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
+    console.log("Decoded: ", decodedToken);
+    const userId = decodedToken.id;
+    console.log("User ID: ", userId);
+
+    let userData = await userModel.findOne({ _id: userId });
+    console.log(userData);
+    res.json({ message: "User Data: ", userData });
+  } catch (error) {
+    res.json({ message: "An Error occured while retrieving User Data", error });
+  }
 };
 
 //? User Signup
@@ -88,11 +112,9 @@ const signIn = async (req, res) => {
           .status(404)
           .json({ message: "User not found, You need to create an account" });
       } else if (foundUser.isVerified === false) {
-        res
-          .status(404)
-          .json({
-            message: "Please check your User email to verify your account",
-          });
+        res.status(404).json({
+          message: "Please check your User email to verify your account",
+        });
       } else if (foundUser.isVerified === true) {
         console.log("Found User? ", foundUser);
         let matched = bcrypt.compareSync(req.body.password, foundUser.password);
@@ -124,9 +146,29 @@ const signIn = async (req, res) => {
 //? Edit User Details
 const updateUser = async (req, res) => {
   try {
+    let token = req.headers.authorization;
+    const { firstName, lastName, email, title, description } = req.body;
+    console.log(firstName, lastName, email, title, description);
+    let decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
+    const userId = decodedToken.id;
+    console.log(userId);
+    //! check what values are filled and update them, if not filled by user don't update them
+    let updateFields = {};
+    if (firstName) updateFields.firstName = firstName;
+    if (lastName) updateFields.lastName = lastName;
+    if (email) updateFields.email = email;
+    if (title) updateFields.title = title;
+    if (description) updateFields.description = description;
+
+    console.log("Update fields", updateFields);
+
+    let updatedUserDetails = await userModel.findByIdAndUpdate(
+      userId,
+      updateFields
+    );
     res.status(200).json({
       message: "User Details were updatd successfully",
-      updateUserDetais,
+      updatedUserDetails,
     });
   } catch (error) {
     res.status(400).json({ message: "Updating User Error: ", error });
@@ -180,6 +222,7 @@ const logout = (req, res) => {
 
 export {
   getAllUsers,
+  getUserData,
   signUp,
   updateUser,
   deactivateAccount,
