@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Layout from "./components/Layout/Layout";
+import Trainers from "./components/Trainers/Trainers"
 import UserSignup from "./components/UserSignup/UserSignup";
 import UserLogin from "./components/UserLogin/UserLogin";
 import UserProfile from "./components/UserProfile/UserProfile";
@@ -36,13 +37,22 @@ function App() {
           element: <Home />,
         },
         {
-          path: "trainers/register",
-          element: <TrainerSignup />,
+          path: "trainers",
+          element: <Trainers />,
         },
         {
           path: "trainers/login",
           element: <TrainerLogin />,
         },
+        {
+          path: "trainer/profile",
+          element: <TrainerProfile />,
+        },
+        {
+          path: "trainer/settings",
+          element: <TrainerSettings />,
+        },
+
         {
           path: "users/register",
           element: <UserSignup />,
@@ -56,10 +66,7 @@ function App() {
           element: <UserProfile />,
         },
         { path: "user/settings", element: <UserSettings /> },
-        {
-          path: "trainer/profile",
-          element: <TrainerProfile />,
-        },
+        
         { path: "trainer/settings", element: <TrainerSettings /> },
       ],
     },

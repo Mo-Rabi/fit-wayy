@@ -7,10 +7,32 @@ import { sendToEmail } from "../../utils/sendEmail.js";
 //? Retrieve all trainers
 const getAllTrainers = async (req, res) => {
   try {
+    console.log("Req received");
     let viewAllTrainers = await trainerModel.find();
     res.json({ message: "Here's a list of all trainers", viewAllTrainers });
   } catch (error) {
     res.json({ message: "Retrieving all trainers Error: ", viewAllTrainers });
+  }
+};
+
+//? Get Trainer Details
+const getTrainerData = async (req, res) => {
+  try {
+    let token = req.headers.authorization;
+    console.log("TOKEEEEN", token);
+    const decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
+    console.log("Decoded: ", decodedToken);
+    const trainerId = decodedToken.id;
+    console.log("Trainer ID: ", trainerId);
+
+    let trainerData = await trainerModel.findOne({ _id: trainerId });
+    console.log("Trainer Data", trainerData);
+    res.json({ message: "Trainer Data: ", trainerData });
+  } catch (error) {
+    res.json({
+      message: "An Error occured while retrieving Trainer Data",
+      error,
+    });
   }
 };
 
@@ -26,7 +48,7 @@ const signUp = async (req, res) => {
       let { email } = req.body;
       let foundTrainer = await trainerModel.findOne({ email: email });
       foundTrainer &&
-        res.status(409).json({ message: "User Email already exists" });
+        res.status(409).json({ message: "Trainer Email already exists" });
       console.log(foundTrainer);
       if (!foundTrainer) {
         let hashedPassword = bcrypt.hashSync(req.body.password, 10);
@@ -38,8 +60,8 @@ const signUp = async (req, res) => {
         const token = jwt.sign({ id: addedTrainer._id }, "secret_key", {
           expiresIn: "30d",
         });
-        const userType = "trainer";
-        sendToEmail(req.body.email, token, userType);
+        const trainerType = "trainer";
+        sendToEmail(req.body.email, token, trainerType);
         res.status(201).json({
           message: "Trainer SignUp successful, please check your email",
           addedTrainer,
@@ -133,9 +155,29 @@ const signIn = async (req, res) => {
 //? Edit Trainer Details
 const updateTrainer = async (req, res) => {
   try {
+    let token = req.headers.authorization;
+    const { firstName, lastName, email, title, description } = req.body;
+    console.log(firstName, lastName, email, title, description);
+    let decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
+    const trainerId = decodedToken.id;
+    console.log(trainerId);
+    //! check what values are filled and update them, if not filled by trainer don't update them
+    let updateFields = {};
+    if (firstName) updateFields.firstName = firstName;
+    if (lastName) updateFields.lastName = lastName;
+    if (email) updateFields.email = email;
+    if (title) updateFields.title = title;
+    if (description) updateFields.description = description;
+
+    console.log("Update fields", updateFields);
+
+    let updatedTrainerDetails = await trainerModel.findByIdAndUpdate(
+      trainerId,
+      updateFields
+    );
     res.status(200).json({
       message: "Trainer Details were updatd successfully",
-      updateTrainerDetais,
+      updatedTrainerDetails,
     });
   } catch (error) {
     res.status(400).json({ message: "Updating Trainer Error: ", error });
@@ -197,4 +239,5 @@ export {
   logout,
   signIn,
   trainerSignUpVerification,
+  getTrainerData,
 };

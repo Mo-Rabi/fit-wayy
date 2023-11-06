@@ -9,6 +9,7 @@ import {
   logout,
   signIn,
   trainerSignUpVerification,
+  getTrainerData
 } from "./trainer.controller.js";
 import { validation } from "../../middleware/validation.js";
 import { signInSchem, signUpValidationSchema } from "./trainer.validation.js";
@@ -16,6 +17,9 @@ import { signInSchem, signUpValidationSchema } from "./trainer.validation.js";
 const trainerRoutes = express.Router();
 //?Get All Trainers
 trainerRoutes.get("/trainers", getAllTrainers);
+
+//? Get Trainer Details
+trainerRoutes.get("/trainerData", getTrainerData);
 
 //? Trainer Signup
 trainerRoutes.post(
@@ -35,7 +39,7 @@ trainerRoutes.post(
 );
 
 //?Edit Trainer Details
-trainerRoutes.patch("/trainers/edit", updateTrainer);
+trainerRoutes.patch("/trainer/edit", updateTrainer);
 
 //? Password Reset
 trainerRoutes.put("/trainers/resetPassword", resetPassword);

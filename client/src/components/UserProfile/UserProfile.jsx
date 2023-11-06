@@ -409,7 +409,8 @@ export default function UserProfile() {
                         <div className="flex-1">
                           <h6 className="text-primary mb-0">Website :</h6>
                           <a href="" className="text-muted">
-                            www.kristajoseph.com
+                            www.{userDataQuery.data.firstName}
+                            {userDataQuery.data.lastName}.com
                           </a>
                         </div>
                       </div>

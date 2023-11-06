@@ -2,12 +2,13 @@ import React from "react";
 import styles from "./Navbar.module.css";
 import LightLogo from "../assets/images/logo-light.png";
 import DarkLogo from "../assets/images/logo-dark.png";
-import { ShoppingCart, Settings } from "react-feather";
+import { ShoppingCart, Settings, LogIn, R } from "react-feather";
 import "../assets/sass/_topbar.scss";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <header id="topnav" className="defaultscroll sticky">
+    <header id="topnav" className="defaultscroll sticky mb-5">
       <div className="container">
         <div>
           <a className="logo" href="index.html">
@@ -39,12 +40,12 @@ export default function Navbar() {
             >
               <div className="login-btn-primary">
                 <span className="btn btn-icon btn-pills btn-soft-primary">
-                  <Settings />
+                  <LogIn />
                 </span>
               </div>
               <div className="login-btn-light">
                 <span className="btn btn-icon btn-pills btn-light">
-                  <Settings />
+                  <LogIn />
                 </span>
               </div>
             </a>
@@ -68,15 +69,15 @@ export default function Navbar() {
         <div id="navigation">
           <ul className="navigation-menu nav-light">
             <li>
-              <a href="index-corporate.html" className="sub-menu-item">
+              <Link to={""} className="sub-menu-item">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="corporate-about.html" className="sub-menu-item">
+              <Link to={"trainers"} className="sub-menu-item">
                 {" "}
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
               <a href="corporate-services.html" className="sub-menu-item">
