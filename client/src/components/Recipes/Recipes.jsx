@@ -3,6 +3,7 @@ import styles from './Recipes.module.css'
 import axios from "axios";
 import f18 from '../assets/images/recipes/f18.jpg'
 import f17 from '../assets/images/recipes/f17.jpg'
+import image from '../assets/account/bg.png'
 
 export default function Recipes() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,7 +35,7 @@ export default function Recipes() {
               <div className="card rounded-0 bg-dark">
                 <div className="row align-items-center g-0">
                   <div className="col-md-6">
-                    <img src={f17} className="img-fluid"/>
+                    <img src={image} className="img-fluid"/>
                   </div>
                   <div className="col-md-6 text-light">
                     <h4>Search for any recipe you like</h4>

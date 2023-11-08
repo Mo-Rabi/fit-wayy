@@ -3,7 +3,9 @@
 body {
     font-family: "Nunito", sans-serif !important;
     color: #ffffff;
-    background-color: #212529 !important;
+    background-image: url("../assets/account/bg-chat.png") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .pageContainer{
     margin-top: 100px;
