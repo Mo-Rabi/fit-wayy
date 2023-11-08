@@ -9,7 +9,7 @@ import {
   logout,
   signIn,
   trainerSignUpVerification,
-  getTrainerData
+  getTrainerData,
 } from "./trainer.controller.js";
 import { validation } from "../../middleware/validation.js";
 import { signInSchem, signUpValidationSchema } from "./trainer.validation.js";
@@ -20,6 +20,9 @@ trainerRoutes.get("/trainers", getAllTrainers);
 
 //? Get Trainer Details
 trainerRoutes.get("/trainerData", getTrainerData);
+
+//? Get Trainer Details
+trainerRoutes.get("/trainerData/:id", getTrainerData);
 
 //? Trainer Signup
 trainerRoutes.post(

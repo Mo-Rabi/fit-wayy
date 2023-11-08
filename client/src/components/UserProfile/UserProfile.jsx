@@ -33,13 +33,14 @@ export default function UserProfile() {
   const queryClient = useQueryClient();
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = token;
-
+let firstName
   //! Retrieve User Details
   const userDataQuery = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
       let { data } = await axios.get("http://localhost:4000/userData");
       const userData = data.userData;
+      console.log();
       return userData;
     },
   });

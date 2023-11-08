@@ -17,7 +17,7 @@ export default function Footer() {
               <div className="row">
                 <div className="col-lg-4 col-12 mb-0 mb-md-4 pb-0 pb-md-2">
                   <a href="#" className="logo-footer">
-                    <img src={logo} height={24} alt />
+                    <img src={logo} height={60} alt />
                   </a>
                   <p className="mt-4">
                     Start working with Landrick that can provide everything you

@@ -11,13 +11,13 @@ export default function Navbar() {
     <header id="topnav" className="defaultscroll sticky mb-5">
       <div className="container">
         <div>
-          <a className="logo" href="index.html">
+          <Link className="logo" to={""}>
             <span className="logo-light-mode">
-              <img src={DarkLogo} className="l-dark" height={24} />
-              <img src={LightLogo} className="l-light" height={24} />
+              <img src={DarkLogo} className="l-dark" height={60} />
+              <img src={LightLogo} className="l-light" height={60} />
             </span>
-            <img src={LightLogo} height={24} className="logo-dark-mode" />
-          </a>
+            <img src={LightLogo} height={60} className="logo-dark-mode" />
+          </Link>
         </div>
         <div className="menu-extras">
           <div className="menu-item">
@@ -76,7 +76,7 @@ export default function Navbar() {
             <li>
               <Link to={"trainers"} className="sub-menu-item">
                 {" "}
-                About Us
+                Trainers
               </Link>
             </li>
             <li>

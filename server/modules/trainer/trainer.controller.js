@@ -7,7 +7,6 @@ import { sendToEmail } from "../../utils/sendEmail.js";
 //? Retrieve all trainers
 const getAllTrainers = async (req, res) => {
   try {
-    console.log("Req received");
     let viewAllTrainers = await trainerModel.find();
     res.json({ message: "Here's a list of all trainers", viewAllTrainers });
   } catch (error) {
@@ -18,14 +17,24 @@ const getAllTrainers = async (req, res) => {
 //? Get Trainer Details
 const getTrainerData = async (req, res) => {
   try {
+    console.log("Req received");
     let token = req.headers.authorization;
-    console.log("TOKEEEEN", token);
-    const decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
-    console.log("Decoded: ", decodedToken);
-    const trainerId = decodedToken.id;
-    console.log("Trainer ID: ", trainerId);
+    let headersId = req.params.id;
+    let id;
+    if (headersId) {
+      console.log("ID is in Params");
+      id = req.params.id;
+    }
+    if (token) {
+      console.log("ID is in token", token);
+      const decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
+      id = decodedToken.id;
+      console.log("ID in Token: ", id);
+    } else {
+      console.log("ID is not in Token nor in Params!");
+    }
 
-    let trainerData = await trainerModel.findOne({ _id: trainerId });
+    let trainerData = await trainerModel.findOne({ _id: id });
     console.log("Trainer Data", trainerData);
     res.json({ message: "Trainer Data: ", trainerData });
   } catch (error) {
@@ -155,9 +164,10 @@ const signIn = async (req, res) => {
 //? Edit Trainer Details
 const updateTrainer = async (req, res) => {
   try {
-    let token = req.headers.authorization;
-    const { firstName, lastName, email, title, description } = req.body;
-    console.log(firstName, lastName, email, title, description);
+
+    const { firstName, lastName, email, title, description, picture, token } =
+      req.body;
+    console.log(firstName, lastName, email, title, description, picture);
     let decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
     const trainerId = decodedToken.id;
     console.log(trainerId);
@@ -168,8 +178,9 @@ const updateTrainer = async (req, res) => {
     if (email) updateFields.email = email;
     if (title) updateFields.title = title;
     if (description) updateFields.description = description;
+    if (picture) updateFields.picture = picture;
 
-    console.log("Update fields", updateFields);
+    console.log("Updated Fields", updateFields);
 
     let updatedTrainerDetails = await trainerModel.findByIdAndUpdate(
       trainerId,

@@ -39,6 +39,7 @@ export default function TrainerProfile() {
     queryKey: ["trainerData"],
     queryFn: async () => {
       let { data } = await axios.get("http://localhost:4000/trainerData");
+      console.log("Data", data);
       const trainerData = data.trainerData;
       console.log("Trainer Data: ", trainerData);
       return trainerData;
@@ -66,7 +67,7 @@ export default function TrainerProfile() {
                   <div className="row align-items-center">
                     <div className="col-lg-2 col-md-3 text-md-start text-center">
                       <img
-                        src={clientPhoto}
+                        src= {trainerDataQuery.data.picture}
                         className="avatar avatar-large rounded-circle shadow d-block mx-auto"
                       />
                     </div>
@@ -511,29 +512,20 @@ export default function TrainerProfile() {
                     </div>
                     <div className="card-body content">
                       <h5>
-                        <a
-                          href=""
-                          className="card-title title text-dark"
-                        >
+                        <a href="" className="card-title title text-dark">
                           Design your apps in your own way
                         </a>
                       </h5>
                       <div className="post-meta d-flex justify-content-between mt-3">
                         <ul className="list-unstyled mb-0">
                           <li className="list-inline-item me-2 mb-0">
-                            <a
-                              href=""
-                              className="text-muted like"
-                            >
+                            <a href="" className="text-muted like">
                               <i className="uil uil-heart me-1" />
                               33
                             </a>
                           </li>
                           <li className="list-inline-item">
-                            <a
-                              href=""
-                              className="text-muted comments"
-                            >
+                            <a href="" className="text-muted comments">
                               <i className="uil uil-comment me-1" />
                               08
                             </a>
@@ -567,29 +559,20 @@ export default function TrainerProfile() {
                     </div>
                     <div className="card-body content">
                       <h5>
-                        <a
-                          href=""
-                          className="card-title title text-dark"
-                        >
+                        <a href="" className="card-title title text-dark">
                           How apps is changing the IT world
                         </a>
                       </h5>
                       <div className="post-meta d-flex justify-content-between mt-3">
                         <ul className="list-unstyled mb-0">
                           <li className="list-inline-item me-2 mb-0">
-                            <a
-                              href=""
-                              className="text-muted like"
-                            >
+                            <a href="" className="text-muted like">
                               <i className="uil uil-heart me-1" />
                               33
                             </a>
                           </li>
                           <li className="list-inline-item">
-                            <a
-                              href=""
-                              className="text-muted comments"
-                            >
+                            <a href="" className="text-muted comments">
                               <i className="uil uil-comment me-1" />
                               08
                             </a>

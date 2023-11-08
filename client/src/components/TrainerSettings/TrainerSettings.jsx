@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./TrainerSettings.module.css";
 import bg from "../assets/account/bg.png";
 import clientPhoto from "../assets/client/05.jpg";
@@ -37,7 +37,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DevTool } from "@hookform/devtools";
-
+import UploadForm from "../Cloudinary/Cloudinary";
 export default function TrainerSettings() {
   // Get QueryClient from the context
   const queryClient = useQueryClient();
@@ -49,7 +49,7 @@ export default function TrainerSettings() {
   //Get Token from local storage and set it to be sent with every axios request
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = token;
-  //! Retrieve Trainer Settings
+  //? Retrieve Trainer Settings
   //let firstName;
   const trainerSettingsQuery = useQuery({
     queryKey: ["trainerSettings"],
@@ -61,7 +61,15 @@ export default function TrainerSettings() {
       return trainerData;
     },
   });
-  let firstName, lastName, email, title, description, phone, height, weight;
+  let firstName,
+    lastName,
+    email,
+    title,
+    description,
+    phone,
+    height,
+    weight,
+    picture;
   //country,
   //city;
   if (trainerSettingsQuery.isSuccess) {
@@ -73,11 +81,13 @@ export default function TrainerSettings() {
     phone = trainerSettingsQuery.data.phone;
     height = trainerSettingsQuery.data.height;
     weight = trainerSettingsQuery.data.weight;
+    picture = trainerSettingsQuery.data.picture;
+
     //country = trainerSettingsQuery.data.country;
     // city = trainerSettingsQuery.data.city;
     //    return (firstName, lastName, email,title,description)
   }
-  //! Update Trainer details
+  //? Update Trainer details
   const personalDataSchema = yup.object({
     firstName: yup
       .string()
@@ -158,7 +168,7 @@ export default function TrainerSettings() {
                     <div className="row align-items-center">
                       <div className="col-lg-2 col-md-3 text-md-start text-center">
                         <img
-                          src={clientPhoto}
+                          src={picture}
                           className="avatar avatar-large rounded-circle shadow d-block mx-auto"
                         />
                       </div>
@@ -171,7 +181,10 @@ export default function TrainerSettings() {
                               {lastName}
                             </h3>
                             <small className="text-muted h6 me-2">
-                              {title}
+                              {title}{" "}
+                              <Link to={"/cloudinary"} className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                                Change Photo
+                              </Link>
                             </small>
                             <ul className="list-inline mb-0 mt-3">
                               <li className="list-inline-item me-4">
@@ -448,27 +461,16 @@ export default function TrainerSettings() {
                 <div className="card border-0 rounded shadow">
                   <div className="card-body">
                     <h5 className="text-md-start text-center">
-                      Personal Detail :
+                      Personal Details :
                     </h5>
-                    <div className="mt-3 text-md-start text-center d-sm-flex">
+                    {/* <div className="mt-3 text-md-start text-center d-sm-flex">
                       <img
-                        src={clientPhoto}
-                        className="avatar float-md-left avatar-medium rounded-circle shadow me-md-4"
-                      />
-                      <div className="mt-md-4 mt-3 mt-sm-0">
-                        <a href="" className="btn btn-primary mt-2">
-                          Change Picture
-                        </a>
-                        <a
-                          href=""
-                          className="btn btn-outline-primary mt-2 ms-2"
-                        >
-                          Delete
-                        </a>
-                      </div>
-                    </div>
+                        src={picture}
+                        className="avatar float-md-left avatar-medium rounded-circle shadow me-md-4 d-inline"
+                      />{" "}
+                    </div> */}
                     {/* Personal information form */}
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} id="#upload-form">
                       <div className="row mt-4">
                         <div className="col-md-6">
                           <div className="mb-3">
