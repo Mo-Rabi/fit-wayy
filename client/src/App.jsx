@@ -1,6 +1,5 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
 import Layout from "./components/Layout/Layout";
 import UserSignup from "./components/UserSignup/UserSignup";
 import UserLogin from "./components/UserLogin/UserLogin";
@@ -39,15 +38,15 @@ function App() {
           element: <Home />,
         },
         {
-          path: "calories",
+          path: "user/calories",
           element: <Calories />,
         },
         {
-          path: "exercises",
+          path: "user/exercises",
           element: <Exercises />,
         },
         {
-          path: "recipes",
+          path: "user/recipes",
           element: <Recipes />,
         },
         {

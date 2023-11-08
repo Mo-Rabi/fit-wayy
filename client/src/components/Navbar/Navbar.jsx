@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Navbar.module.css";
 import LightLogo from "../assets/images/logo-light.png";
 import DarkLogo from "../assets/images/logo-dark.png";
-import { ShoppingCart, Settings } from "react-feather";
+import { ShoppingCart, Settings, Link } from "react-feather";
 import "../assets/sass/_topbar.scss";
 
 export default function Navbar() {
@@ -82,6 +82,28 @@ export default function Navbar() {
               <a href="corporate-services.html" className="sub-menu-item">
                 Services
               </a>
+            </li>
+            <li className="has-submenu parent-parent-menu-item">
+              <a href="#">Know more</a>
+              <span className="menu-arrow" />
+              <ul className="submenu">
+                <li>
+                  <a href={'/user/calories'} className="sub-menu-item">
+                    {" "}
+                    Calories
+                  </a>
+                </li>
+                <li>
+                  <a href="/user/exercises" className="sub-menu-item">
+                    Exercises
+                  </a>
+                </li>
+                <li>
+                  <a href="/user/recipes" className="sub-menu-item">
+                    Recipes
+                  </a>
+                </li>
+              </ul>
             </li>
             <li className="has-submenu parent-parent-menu-item">
               <a href="#">Pages</a>

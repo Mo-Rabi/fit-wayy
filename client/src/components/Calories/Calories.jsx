@@ -67,7 +67,7 @@ export default function Calories() {
         <div className="container mt-5">
           <div className="row justify-content-center">
             <div className="col-12">
-              <div className="table-responsive features-absolute shadow-md rounded">
+              <div className="table-responsive mb-3 shadow-md rounded">
                 <table className="table mb-0 table-center table-dark">
                   <thead>
                     <tr className="text-center">
