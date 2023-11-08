@@ -25,7 +25,11 @@ const trainerSchema = new mongoose.Schema(
     rating: { type: Number, default: 0 },
     trainees: { type: Array, default: [] },
     plans: { type: Array, default: [] },
-    price:{type:Number, required:true},
+    price: { type: Number, required: true },
+    title: { type: String, default: "" },
+    description: { type: String, default: "" },
+    city: { type: String, default: "" },
+    country: { type: String, default: "" },
     password: {
       type: String,
       required: true,

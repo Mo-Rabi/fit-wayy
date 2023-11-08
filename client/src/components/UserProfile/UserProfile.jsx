@@ -33,13 +33,14 @@ export default function UserProfile() {
   const queryClient = useQueryClient();
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = token;
-
+let firstName
   //! Retrieve User Details
   const userDataQuery = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
       let { data } = await axios.get("http://localhost:4000/userData");
       const userData = data.userData;
+      console.log();
       return userData;
     },
   });
@@ -409,7 +410,8 @@ export default function UserProfile() {
                         <div className="flex-1">
                           <h6 className="text-primary mb-0">Website :</h6>
                           <a href="" className="text-muted">
-                            www.kristajoseph.com
+                            www.{userDataQuery.data.firstName}
+                            {userDataQuery.data.lastName}.com
                           </a>
                         </div>
                       </div>
