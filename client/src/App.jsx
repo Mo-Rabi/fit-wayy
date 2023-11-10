@@ -45,18 +45,6 @@ function App() {
           element: <SearchForMore />,
         },
         {
-          path: "user/calories",
-          element: <Calories />,
-        },
-        {
-          path: "user/exercises",
-          element: <Exercises />,
-        },
-        {
-          path: "user/recipes",
-          element: <Recipes />,
-        },
-        {
           path: "trainers/register",
           element: <TrainerSignup />,
           path: "cloudinary",

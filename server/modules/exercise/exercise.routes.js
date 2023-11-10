@@ -13,6 +13,6 @@ exerciseRoutes.post("/trainer/createExercise", createExercise);
 exerciseRoutes.get("/trainer/getAll", getAllExercises);
 exerciseRoutes.get("/user/getExercise", searchExercisesByMuscle);
 exerciseRoutes.put("/trainers/updateExercise/:name", updateExercise);
-exerciseRoutes.delete("/deleteExercise", deleteExercise);
+exerciseRoutes.delete("/admin/deleteExercise", deleteExercise);
 
 export default exerciseRoutes;

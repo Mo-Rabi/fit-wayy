@@ -135,13 +135,12 @@ export const updateExercise = (req, res) => {
 };
 
 
-// Delete an exercise by ID
 export const deleteExercise = (req, res) => {
     const exerciseId = req.params.id;
 
     ExerciseModel.findByIdAndRemove(exerciseId)
         .then(() => {
-            res.status(204).send(); // Send a success response with no content
+            res.status(204).send();
         })
         .catch((error) => {
             res.status(400).json({ error: 'Failed to delete exercise' });
