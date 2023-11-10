@@ -13,7 +13,7 @@ import TrainerProfile from "./components/TrainerProfile/TrainerProfile";
 import TrainerSettings from "./components/TrainerSettings/TrainerSettings";
 import ViewTrainer from "./components/ViewTrainer/ViewTrainer";
 import Home from "./components/Home/Home";
-import Cloudinary from "./components/Cloudinary/Cloudinary"
+//import Cloudinary from "./components/Cloudinary/Cloudinary";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./components/assets/css/style.min.css";
 import "./components/assets/css/bootstrap.min.css";
@@ -25,6 +25,7 @@ import "./components/assets/sass/_topbar.scss";
 import "./components/assets/js/app";
 import "./components/assets/js/easy_background";
 import "./components/assets/js/plugins.init";
+import VerificationSuccess from "./components/VerificationSuccess/VerificationSuccess";
 
 function App() {
   const routes = createBrowserRouter([
@@ -37,10 +38,10 @@ function App() {
           index: true,
           element: <Home />,
         },
-        {
-          path: "cloudinary",
-          element: <Cloudinary />,
-        },
+        // {
+        //   path: "cloudinary",
+        //   element: <Cloudinary />,
+        // },
         {
           path: "trainers",
           element: <Trainers />,
@@ -81,6 +82,7 @@ function App() {
         { path: "user/settings", element: <UserSettings /> },
 
         { path: "trainer/settings", element: <TrainerSettings /> },
+        { path: "verification/success", element: <VerificationSuccess /> },
       ],
     },
   ]);

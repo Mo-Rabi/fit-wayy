@@ -37,20 +37,25 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DevTool } from "@hookform/devtools";
-import UploadForm from "../Cloudinary/Cloudinary";
+// import UploadForm from "../CloudinaryAPI/UploadForm";
+import CloudinaryWidget from "../CloudinaryWidget/CloudinaryWidget";
+
 export default function TrainerSettings() {
   // Get QueryClient from the context
   const queryClient = useQueryClient();
   //Invalidate queries to update automatically
   queryClient.invalidateQueries({ queryKey: ["trainerSettings"] });
 
-  //Track error message
+  //Track server response message and status
   let [apiResponse, setApiResponse] = useState({ message: "", status: "" });
   //Get Token from local storage and set it to be sent with every axios request
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = token;
   //? Retrieve Trainer Settings
-  //let firstName;
+  // Invalidate every query in the cache
+  // queryClient.invalidateQueries();
+  // Invalidate every query with a key that starts with `todos`
+  queryClient.invalidateQueries({ queryKey: ["trainerSettings"] });
   const trainerSettingsQuery = useQuery({
     queryKey: ["trainerSettings"],
     queryFn: async () => {
@@ -116,6 +121,7 @@ export default function TrainerSettings() {
       email: "",
       title: "",
       description: "",
+      picture: "",
       // password: "",
       // confirmPassword: "",
       // phone: "",
@@ -149,6 +155,22 @@ export default function TrainerSettings() {
   if (trainerSettingsQuery.isLoading) return <h1>Loading...</h1>;
   if (trainerSettingsQuery.isError)
     return <pre>{JSON.stringify(trainerSettingsQuery.error)}</pre>;
+  // let imageURLValue;
+  // //! Get Profile image from child widget component
+  // const getImageURL = (ImageURL) => {
+  //   console.log("Image URL from PROP", ImageURL);
+  //   if (ImageURL) {
+  //     imageURLValue = ImageURL;
+  //   }
+  // };
+  // console.log("###### Image URL from Prop OUT ########", imageURLValue);
+  // let photo = imageURLValue;
+  // console.log("Photo", photo);
+
+  const Logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
   return (
     <>
       <div>
@@ -182,8 +204,11 @@ export default function TrainerSettings() {
                             </h3>
                             <small className="text-muted h6 me-2">
                               {title}{" "}
-                              <Link to={"/cloudinary"} className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-                                Change Photo
+                              <Link className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                                <CloudinaryWidget
+                                  // getImageURL={getImageURL}
+                                  className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                />
                               </Link>
                             </small>
                             <ul className="list-inline mb-0 mt-3">
@@ -402,13 +427,14 @@ export default function TrainerSettings() {
                       </li>
                       <li className="navbar-item account-menu px-0 mt-2">
                         <a
-                          href="auth-login-three.html"
                           className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
                         >
                           <span className="h4 mb-0">
                             <i className="uil uil-dashboard" />
                           </span>
-                          <h6 className="mb-0 ms-2">Logout</h6>
+                          <h6 className="mb-0 ms-2" onClick={Logout}>
+                            Logout
+                          </h6>
                         </a>
                       </li>
                     </ul>

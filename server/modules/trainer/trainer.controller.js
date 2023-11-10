@@ -17,7 +17,6 @@ const getAllTrainers = async (req, res) => {
 //? Get Trainer Details
 const getTrainerData = async (req, res) => {
   try {
-    console.log("Req received");
     let token = req.headers.authorization;
     let headersId = req.params.id;
     let id;
@@ -54,7 +53,7 @@ const signUp = async (req, res) => {
     if (error) {
       res.status(400).json({ message: "Trainer Validation error", error });
     } else {
-      let { email } = req.body;
+      let { email, firstName } = req.body;
       let foundTrainer = await trainerModel.findOne({ email: email });
       foundTrainer &&
         res.status(409).json({ message: "Trainer Email already exists" });
@@ -70,7 +69,7 @@ const signUp = async (req, res) => {
           expiresIn: "30d",
         });
         const trainerType = "trainer";
-        sendToEmail(req.body.email, token, trainerType);
+        sendToEmail(req.body.email, token, trainerType, firstName);
         res.status(201).json({
           message: "Trainer SignUp successful, please check your email",
           addedTrainer,
@@ -98,9 +97,7 @@ const trainerSignUpVerification = async (req, res) => {
     console.log("Trainer Verified: ", trainer);
 
     // Redirect trainer to login page or send a response
-    res.json({
-      message: "Trainer Email verification successful. You can now log in.",
-    });
+    res.redirect("http://localhost:3000/verification/success");
   } catch (error) {
     console.log("Trainer Signup Verification Error: ", error);
   }
@@ -119,7 +116,7 @@ const signIn = async (req, res) => {
       let foundTrainer = await trainerModel.findOne({ email: req.body.email });
       if (!foundTrainer) {
         res.status(404).json({
-          message: "Trainer not found, You need to create an account",
+          message: "Trainer not found, Become a Trainer Now!",
         });
       } else if (foundTrainer.isVerified === false) {
         res
@@ -164,13 +161,16 @@ const signIn = async (req, res) => {
 //? Edit Trainer Details
 const updateTrainer = async (req, res) => {
   try {
+    console.log("Request Body", req.body);
 
-    const { firstName, lastName, email, title, description, picture, token } =
+    console.log(req.headers.authorization);
+    let token = req.body.token || req.headers.authorization;
+    console.log("Token", token);
+    const { firstName, lastName, email, title, description, picture, rating } =
       req.body;
     console.log(firstName, lastName, email, title, description, picture);
     let decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
     const trainerId = decodedToken.id;
-    console.log(trainerId);
     //! check what values are filled and update them, if not filled by trainer don't update them
     let updateFields = {};
     if (firstName) updateFields.firstName = firstName;
@@ -179,6 +179,7 @@ const updateTrainer = async (req, res) => {
     if (title) updateFields.title = title;
     if (description) updateFields.description = description;
     if (picture) updateFields.picture = picture;
+    if (rating) updateFields.picture = rating;
 
     console.log("Updated Fields", updateFields);
 
