@@ -8,7 +8,7 @@ import CodePen from "../assets/images/job/Codepen.svg";
 import blog1 from "../assets/images/blog/01.jpg";
 import blog2 from "../assets/images/blog/02.jpg";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   UserPlus,
   Users,
@@ -30,6 +30,7 @@ import {
 import axios from "axios";
 
 export default function TrainerProfile() {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = token;
@@ -49,6 +50,11 @@ export default function TrainerProfile() {
   if (trainerDataQuery.isLoading) return <h1>Loading...</h1>;
   if (trainerDataQuery.isError)
     return <pre>{JSON.stringify(trainerDataQuery.error)}</pre>;
+
+  const Logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
   return (
     <div>
       {/* Hero Start */}
@@ -67,7 +73,7 @@ export default function TrainerProfile() {
                   <div className="row align-items-center">
                     <div className="col-lg-2 col-md-3 text-md-start text-center">
                       <img
-                        src= {trainerDataQuery.data.picture}
+                        src={trainerDataQuery.data.picture}
                         className="avatar avatar-large rounded-circle shadow d-block mx-auto"
                       />
                     </div>
@@ -80,7 +86,8 @@ export default function TrainerProfile() {
                             {trainerDataQuery.data.lastName}
                           </h3>
                           <small className="text-muted h6 me-2">
-                            {trainerDataQuery.data.title}
+                            {trainerDataQuery.data.title ||
+                              "Go to profile settings to edit your Title"}
                           </small>
                           <ul className="list-inline mb-0 mt-3">
                             <li className="list-inline-item me-3">
@@ -307,15 +314,17 @@ export default function TrainerProfile() {
                       </a>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
-                      <a
-                        href="auth-login-three.html"
+                      <Link
+                        to={""}
                         className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
                       >
                         <span className="h4 mb-0">
                           <i className="uil uil-dashboard" />
                         </span>
-                        <h6 className="mb-0 ms-2">Logout</h6>
-                      </a>
+                        <h6 className="mb-0 ms-2" onClick={Logout}>
+                          Logout
+                        </h6>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -370,7 +379,8 @@ export default function TrainerProfile() {
                   {trainerDataQuery.data.lastName}
                 </h5>
                 <p className="text-muted mb-0">
-                  {trainerDataQuery.data.description}
+                  {trainerDataQuery.data.description ||
+                    "Go to profile settings to edit your Description"}
                 </p>
               </div>
               <div className="border-bottom pb-4">

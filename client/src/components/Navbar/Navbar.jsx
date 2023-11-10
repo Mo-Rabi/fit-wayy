@@ -2,11 +2,12 @@ import React from "react";
 import styles from "./Navbar.module.css";
 import LightLogo from "../assets/images/logo-light.png";
 import DarkLogo from "../assets/images/logo-dark.png";
-import { ShoppingCart, Settings, LogIn, R } from "react-feather";
+import { ShoppingCart, Settings, LogIn, User } from "react-feather";
 import "../assets/sass/_topbar.scss";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
+  const token = localStorage.getItem("token");
   return (
     <header id="topnav" className="defaultscroll sticky mb-5">
       <div className="container">
@@ -31,40 +32,43 @@ export default function Navbar() {
           </div>
         </div>
         <ul className="buy-button list-inline mb-0">
-          <li className="list-inline-item mb-0">
-            <a
-              href="#"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasRight"
-              aria-controls="offcanvasRight"
-            >
-              <div className="login-btn-primary">
-                <span className="btn btn-icon btn-pills btn-soft-primary">
-                  <LogIn />
-                </span>
-              </div>
-              <div className="login-btn-light">
-                <span className="btn btn-icon btn-pills btn-light">
-                  <LogIn />
-                </span>
-              </div>
-            </a>
-          </li>
-          <li className="list-inline-item ps-1 mb-0">
-            <a href="#" target="_blank">
-              <div className="login-btn-primary">
-                <span className="btn btn-icon btn-pills btn-primary">
-                  <ShoppingCart />
-                </span>
-              </div>
+          {token ? (
+            <li className="list-inline-item ps-1 mb-0">
+              <Link to={"/trainer/profile"}>
+                <div className="login-btn-primary">
+                  <span className="btn btn-icon btn-pills btn-primary">
+                    <User />
+                  </span>
+                </div>
 
-              <div className="login-btn-light">
-                <span className="btn btn-icon btn-pills btn-light">
-                  <ShoppingCart />
-                </span>
-              </div>
-            </a>
-          </li>
+                <div className="login-btn-light">
+                  <span className="btn btn-icon btn-pills btn-light">
+                    <User />
+                  </span>
+                </div>
+              </Link>
+            </li>
+          ) : (
+            <li className="list-inline-item mb-0">
+              <Link to={"/trainers/login"}
+
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight"
+              >
+                <div className="login-btn-primary">
+                  <span className="btn btn-icon btn-pills btn-soft-primary">
+                    <LogIn />
+                  </span>
+                </div>
+                <div className="login-btn-light">
+                  <span className="btn btn-icon btn-pills btn-light">
+                    <LogIn />
+                  </span>
+                </div>
+              </Link>
+            </li>
+          )}
         </ul>
         <div id="navigation">
           <ul className="navigation-menu nav-light">

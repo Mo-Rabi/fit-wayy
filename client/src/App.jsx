@@ -12,8 +12,8 @@ import TrainerProfile from "./components/TrainerProfile/TrainerProfile";
 import TrainerSettings from "./components/TrainerSettings/TrainerSettings";
 import ViewTrainer from "./components/ViewTrainer/ViewTrainer";
 import Home from "./components/Home/Home";
-import Cloudinary from "./components/Cloudinary/Cloudinary"
 import SearchForMore from "./components/SearchForMore/SearchForMore"
+//import Cloudinary from "./components/Cloudinary/Cloudinary";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Calories from "./components/Calories/Calories";
 import Exercises from "./components/Exercises/Exercises"
@@ -28,6 +28,7 @@ import "./components/assets/sass/_topbar.scss";
 import "./components/assets/js/app";
 import "./components/assets/js/easy_background";
 import "./components/assets/js/plugins.init";
+import VerificationSuccess from "./components/VerificationSuccess/VerificationSuccess";
 
 function App() {
   const routes = createBrowserRouter([
@@ -47,8 +48,8 @@ function App() {
         {
           path: "trainers/register",
           element: <TrainerSignup />,
-          path: "cloudinary",
-          element: <Cloudinary />,
+          // path: "cloudinary",
+          // element: <Cloudinary />,
         },
         {
           path: "trainers",
@@ -90,6 +91,7 @@ function App() {
         { path: "user/settings", element: <UserSettings /> },
 
         { path: "trainer/settings", element: <TrainerSettings /> },
+        { path: "verification/success", element: <VerificationSuccess /> },
       ],
     },
   ]);
