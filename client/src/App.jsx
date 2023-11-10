@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Layout from "./components/Layout/Layout";
@@ -25,6 +25,9 @@ import "./components/assets/sass/_topbar.scss";
 import "./components/assets/js/app";
 import "./components/assets/js/easy_background";
 import "./components/assets/js/plugins.init";
+import Allusers from "./components/AllUsers/Allusers";
+import Gymnastics from "./components/Gymnastics/Gymnastics";
+import BMI from "./components/BMI/BMI";
 
 function App() {
   const routes = createBrowserRouter([
@@ -81,6 +84,9 @@ function App() {
         { path: "user/settings", element: <UserSettings /> },
 
         { path: "trainer/settings", element: <TrainerSettings /> },
+        {path: "all", element: <Allusers/>},
+        {path: "gymn", element: <Gymnastics/>},
+        {path: "/bmi", element: <BMI/>}
       ],
     },
   ]);
@@ -88,3 +94,5 @@ function App() {
 }
 
 export default App;
+
+

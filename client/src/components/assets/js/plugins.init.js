@@ -33,7 +33,7 @@
 //=========================================//
 /*            01) Tiny slider              */
 //=========================================//
-
+////////////////////////////Mousa//////////////////////////
 if(document.getElementsByClassName('tiny-single-item').length > 0) {
     var slider = tns({
         container: '.tiny-single-item',

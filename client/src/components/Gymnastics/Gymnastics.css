@@ -1,0 +1,12 @@
+.checkmark {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  #bm {
+    width: 170px;
+  }
+  #do {
+    display: flex;
+    justify-content: center;
+  }
