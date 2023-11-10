@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from 'axios';
 import '../assets/css/bootstrap-dark.min.css'
 import styles from './Calories.module.css';
-
 export default function Calories() {
   const [searchTerm, setSearchTerm] = useState('');
   const [data, setData] = useState(null);
@@ -12,7 +11,9 @@ export default function Calories() {
   const apiKey = process.env.REACT_APP_API_KEY;
   const apiUrl = `https://api.api-ninjas.com/v1/nutrition`;
 
-  const fetchData = async () => {
+  const fetchCaloriesData = async () => {
+  const apiUrl = `https://api.api-ninjas.com/v1/nutrition`;
+
     try {
       setIsLoading(true)
       setError(null);
@@ -31,7 +32,7 @@ export default function Calories() {
 
   const handleSearch = () => {
     if (searchTerm) {
-      fetchData();
+      fetchCaloriesData();
     } else {
       return ''
     }
@@ -39,8 +40,9 @@ export default function Calories() {
 
   return (
     <>
-      <div className={`${styles.pageContainer}`}>
-        <h4 className="text-center text-light mt-3">Nutrition Information for each 100 gm</h4>
+      <div className="container text-light">
+      <div className="row justify-content-center">
+        <h4 className="text-center text-light">Enter food name to get macronutrients Information for each 100 gm</h4>
         <div className={`text-center mt-3 pt-2 ${styles.subscribeForm}`}>
           <form className={`${styles.searchForm}`}>
             <input
@@ -61,25 +63,27 @@ export default function Calories() {
             </button>
           </form>
           {data && data.length === 0 && !isLoading && (
-            <p style={{ color: 'red' }}>No data matched your search.</p>
+            <p style={{ color: 'red' }}>No ingredients found. Please search for one.</p>
           )}
+
         </div>
         <div className="container mt-5">
           <div className="row justify-content-center">
             <div className="col-12">
               <div className="table-responsive mb-3 shadow-md rounded">
-                <table className="table mb-0 table-center table-dark">
-                  <thead>
-                    <tr className="text-center">
-                      <th scope="col" className="fw-normal border-bottom text-secondary py-4 px-1" style={{ width: 130 }}><i className="fa-solid fa-bowl-food"></i> Ingredient</th>
-                      <th scope="col" className="fw-normal border-bottom text-secondary py-4 px-1" style={{ width: 100 }}><i className="fa-solid fa-bolt"></i> Calories (kcal)</th>
-                      <th scope="col" className="fw-normal border-bottom text-secondary py-4 px-1" style={{ width: 100 }}><i className="fa-solid fa-dna"></i> Protein (gm)</th>
-                      <th scope="col" className="fw-normal border-bottom text-secondary py-4 px-1" style={{ width: 100 }}><i className="fa-solid fa-bacon"></i> Fat (gm)</th>
-                      <th scope="col" className="fw-normal border-bottom text-secondary py-4 px-0" style={{ width: 120 }}><i className="fa-solid fa-bread-slice"></i> Carbohydrates (gm)</th>
-                      <th scope="col" className="fw-normal border-bottom text-secondary py-4 px-0" style={{ width: 100 }}><i className="fa-solid fa-cubes-stacked"></i> Sugar (gm)</th>
-                    </tr>
-                  </thead>
+                
                   {data && data.length > 0 && (
+                    <table className="table mb-0 table-center table-primary">
+                    <thead>
+                      <tr className="text-center text-light">
+                        <th scope="col" className="fw-normal border-bottom py-4 px-1" style={{ width: 130 }}><i className="fa-solid fa-bowl-food"></i> Ingredient</th>
+                        <th scope="col" className="fw-normal border-bottom py-4 px-1" style={{ width: 100 }}><i className="fa-solid fa-bolt"></i> Calories (kcal)</th>
+                        <th scope="col" className="fw-normal border-bottom py-4 px-1" style={{ width: 100 }}><i className="fa-solid fa-dna"></i> Protein (gm)</th>
+                        <th scope="col" className="fw-normal border-bottom py-4 px-1" style={{ width: 100 }}><i className="fa-solid fa-bacon"></i> Fat (gm)</th>
+                        <th scope="col" className="fw-normal border-bottom py-4 px-0" style={{ width: 120 }}><i className="fa-solid fa-bread-slice"></i> Carbohydrates (gm)</th>
+                        <th scope="col" className="fw-normal border-bottom py-4 px-0" style={{ width: 100 }}><i className="fa-solid fa-cubes-stacked"></i> Sugar (gm)</th>
+                      </tr>
+                    </thead>
                     <tbody>
                       {data.map((item, index) => (
                         <tr className="text-center" key={index}>
@@ -92,11 +96,13 @@ export default function Calories() {
                         </tr>
                       ))}
                     </tbody>
+                    </table>
+                    
                   )}
-                </table>
-              </div>
+                </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </>

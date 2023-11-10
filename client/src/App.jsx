@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Layout from "./components/Layout/Layout";
+import Trainers from "./components/Trainers/Trainers";
 import UserSignup from "./components/UserSignup/UserSignup";
 import UserLogin from "./components/UserLogin/UserLogin";
 import UserProfile from "./components/UserProfile/UserProfile";
@@ -8,8 +9,11 @@ import UserSettings from "./components/UserSettings/UserSettings";
 import TrainerSignup from "./components/TrainerSignup/TrainerSignup";
 import TrainerLogin from "./components/TrainerLogin/TrainerLogin";
 import TrainerProfile from "./components/TrainerProfile/TrainerProfile";
-import TrainerSettings from "./components/TrainerSettings/TrainerSettings"
-import Home from "./components/Home/Home"
+import TrainerSettings from "./components/TrainerSettings/TrainerSettings";
+import ViewTrainer from "./components/ViewTrainer/ViewTrainer";
+import Home from "./components/Home/Home";
+import Cloudinary from "./components/Cloudinary/Cloudinary"
+import SearchForMore from "./components/SearchForMore/SearchForMore"
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Calories from "./components/Calories/Calories";
 import Exercises from "./components/Exercises/Exercises"
@@ -31,11 +35,14 @@ function App() {
       path: "",
       element: <Layout />,
       children: [
-
         {
           path: "",
-          index:true,
+          index: true,
           element: <Home />,
+        },
+        {
+          path: "user/searchForMore",
+          element: <SearchForMore />,
         },
         {
           path: "user/calories",
@@ -52,14 +59,37 @@ function App() {
         {
           path: "trainers/register",
           element: <TrainerSignup />,
+          path: "cloudinary",
+          element: <Cloudinary />,
+        },
+        {
+          path: "trainers",
+          element: <Trainers />,
         },
         {
           path: "trainers/login",
           element: <TrainerLogin />,
         },
         {
+          path: "trainer/profile",
+          element: <TrainerProfile />,
+        },
+        {
+          path: "trainer/profile/:id",
+          element: <ViewTrainer />,
+        },
+        {
+          path: "trainer/settings",
+          element: <TrainerSettings />,
+        },
+
+        {
           path: "users/register",
           element: <UserSignup />,
+        },
+        {
+          path: "trainers/register",
+          element: <TrainerSignup />,
         },
         {
           path: "users/login",
@@ -70,10 +100,7 @@ function App() {
           element: <UserProfile />,
         },
         { path: "user/settings", element: <UserSettings /> },
-        {
-          path: "trainer/profile",
-          element: <TrainerProfile />,
-        },
+
         { path: "trainer/settings", element: <TrainerSettings /> },
       ],
     },
