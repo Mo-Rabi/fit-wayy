@@ -128,9 +128,9 @@ export default function UserSignup() {
         message: serverMsg,
         status: statusCode,
       });
-      // setTimeout(() => {
-      //   navigate("/verification/success");
-      // }, 3000);
+      setTimeout(() => {
+        navigate("/trainers/login");
+      }, 4000);
     } catch (error) {
       let errorMsg = error.response.data.message;
       let statusCode = error.response.status;
