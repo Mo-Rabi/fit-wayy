@@ -21,14 +21,14 @@ const getAllUsers = async (req, res) => {
 const getUserData = async (req, res) => {
   try {
     let token = req.headers.authorization;
-    console.log("TOKEEEEN", token);
+    console.log("TOKEEEENista", token);
     const decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
     console.log("Decoded: ", decodedToken);
     const userId = decodedToken.id;
     console.log("User ID: ", userId);
 
     let userData = await userModel.findOne({ _id: userId });
-    console.log(userData);
+    console.log("FOUND USER?: ",userData);
     res.json({ message: "User Data: ", userData });
   } catch (error) {
     res.json({ message: "An Error occured while retrieving User Data", error });

@@ -151,15 +151,15 @@ export default function TrainerProfile() {
                               </a>
                             </li>
                             <li className="list-inline-item me-1">
-                              <a
-                                href="account-setting.html"
+                              <Link
+                                to={"/trainer/settings"}
                                 className="rounded"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="bottom"
                                 title="Settings"
                               >
                                 <i className="uil uil-cog align-middle" />
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                           {/*end icon*/}
@@ -229,10 +229,7 @@ export default function TrainerProfile() {
                     id="navmenu-nav"
                   >
                     <li className="navbar-item account-menu px-0">
-                      <a
-                        href="account-profile.html"
-                        className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
-                      >
+                      <a className="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
                         <span className="h4 mb-0">
                           <i className="uil uil-dashboard" />
                         </span>
