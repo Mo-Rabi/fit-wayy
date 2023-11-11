@@ -84,8 +84,8 @@ function App() {
         { path: "user/settings", element: <UserSettings /> },
 
         { path: "trainer/settings", element: <TrainerSettings /> },
-        {path: "all", element: <Allusers/>},
-        {path: "gymn", element: <Gymnastics/>},
+        {path: "/all", element: <Allusers/>},
+        {path: "/gymn", element: <Gymnastics/>},
         {path: "/bmi", element: <BMI/>}
       ],
     },

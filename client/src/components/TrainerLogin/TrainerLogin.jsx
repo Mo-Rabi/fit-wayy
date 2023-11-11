@@ -39,7 +39,7 @@ export default function TrainerLogin() {
       //localStorage.setItem("userToken", data.token);
       //setToken(data.token);
       
-        navigate("/trainer/profile");
+        navigate("/all");
       
     } catch (error) {
       //console.log("Error: " + err);

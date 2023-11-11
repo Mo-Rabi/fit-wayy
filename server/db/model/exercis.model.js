@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { model } from "mongoose";
-const exerciseSchema = new Schema({
+const exercisSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -45,5 +45,5 @@ const exerciseSchema = new Schema({
     //     ref: "User"
     // }
 }, {timestamps: true});
-const exerciseModel = model("Exercis", exerciseSchema);
-export default exerciseModel;
+const exercisModel = model("Exercis", exercisSchema);
+export default exercisModel;

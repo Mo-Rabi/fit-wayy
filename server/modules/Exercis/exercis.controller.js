@@ -1,4 +1,4 @@
-import exerciseModel from "../../db/model/exercise.model.js";
+import exercisModel from "../../db/model/exercis.model.js";
 import userModel from "../../db/model/user.model.js";
 import sendNotificationEmail from "../../utils/SendingEmailM.js";
 
@@ -46,7 +46,7 @@ const addExercise = async (req, res) => {
         }
 
         // Create the exercise
-        const addedExercise = await exerciseModel.create({
+        const addedExercise = await exercisModel.create({
             email: email,
             userName,
             day,
@@ -103,7 +103,7 @@ const getAllExercise = async (req, res) => {
 const deleteExercise = async (req, res) => {
     try {
         const exerId = req.params.id;
-        const deletedExercise = await exerciseModel.deleteOne({_id: exerId});
+        const deletedExercise = await exercisModel.deleteOne({_id: exerId});
         if(!deletedExercise) {
             res.status(400).json({message: "Not Deleted"})
         }else {
@@ -126,7 +126,7 @@ const allUsers = async (req, res) => {
 const completedExercises = async (req, res) => {
     try {
         const exerciseId = req.params.exerciseId;
-        const updatedExercise = await exerciseModel.findByIdAndUpdate(
+        const updatedExercise = await exercisModel.findByIdAndUpdate(
             exerciseId,
             {isCorrect: true},
             {new: true}
