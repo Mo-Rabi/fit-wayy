@@ -37,6 +37,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DevTool } from "@hookform/devtools";
+import CloudinaryWidget from "../CloudinaryWidget/CloudinaryWidget";
 
 export default function UserSettings() {
   // Get QueryClient from the context
@@ -61,7 +62,15 @@ export default function UserSettings() {
       return userData;
     },
   });
-  let firstName, lastName, email, title, description, phone, height, weight;
+  let firstName,
+    lastName,
+    email,
+    title,
+    description,
+    phone,
+    height,
+    weight,
+    picture;
   //country,
   //city;
   if (userSettingsQuery.isSuccess) {
@@ -73,6 +82,8 @@ export default function UserSettings() {
     phone = userSettingsQuery.data.phone;
     height = userSettingsQuery.data.height;
     weight = userSettingsQuery.data.weight;
+    picture = userSettingsQuery.data.picture;
+
     //country = userSettingsQuery.data.country;
     // city = userSettingsQuery.data.city;
     //    return (firstName, lastName, email,title,description)
@@ -140,6 +151,8 @@ export default function UserSettings() {
       email: "",
       title: "",
       description: "",
+      picture: "",
+
       // password: "",
       // confirmPassword: "",
       // phone: "",
@@ -171,161 +184,12 @@ export default function UserSettings() {
   if (userSettingsQuery.isError)
     return <pre>{JSON.stringify(userSettingsQuery.error)}</pre>;
 
-  // const queryClient = useQueryClient();
-  // const token = localStorage.getItem("token");
-  // console.log("Token", token);
-  // axios.defaults.headers.common["Authorization"] = token;
-
-  // const { isLoading, isError, data, error } = useQuery({
-  //   queryKey: ["userData"],
-  //   queryFn: fetchTodoList,
-  // })
-
-  // //! Retrieve User Details
-  // let firstName;
-  // const userDataQuery = useQuery({
-  //   queryKey: ["userData"],
-  //   queryFn: async () => {
-  //     console.log("inside query function");
-  //     let { data } = await axios.get("http://localhost:4000/userData");
-  //     const userData = data.userData;
-  //     firstName = userData.firstName
-  //     console.log(userData);
-  //     return userData;
-  //   },
-  // });
-
-  // console.log("User Data: ", userDataQuery.data.firstName);
-
-  // console.log("Loadgin?", userDataQuery.isLoading);
-  // console.log("Error?", userDataQuery.isError);
-  // console.log("Sccess?", userDataQuery.isSuccess);
-
-  //  const isLoading = userDataQuery.isLoading;
-  // const isError = userDataQuery.isError;
-  // return (
-  //   <>
-  //     {isLoading && <h1>Loading...</h1>}
-  //     {isError && <pre>{JSON.stringify(userDataQuery.error)}</pre>}
-  //     {/* Rest of your component */}
-  //   </> )
-
-  //   if (userDataQuery.isLoading) return <h1>Loading...</h1>;
-  // if (userDataQuery.isError)
-  //  return <pre>{JSON.stringify(userDataQuery.error)}</pre>;
-
-  // //! Update User details
-  // const personalDataSchema = yup.object({
-  //   firstName: yup
-  //     .string()
-  //     .min(2, "Min 2 characters")
-  //     .max(50, "Max number of characters is 50"),
-  //   lastName: yup
-  //     .string()
-  //     .min(2, "Min 2 characters")
-  //     .max(50, "Max number of characters is 10"),
-  //   email: yup
-  //     .string()
-  //     .email()
-  //     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Invalid email"),
-  //   title: yup.string().max(25, "Max number of characters is 25"),
-  //   description: yup.string().max(250, "Max number of characters is 250"),
-  // });
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors, touchedFields, dirtyFields, isDirty, isValid },
-  //   control,
-  //   trigger,
-  // } = useForm({
-  //   defaultValues: {
-  //     firstName: "",
-  //     lastName: "",
-  //     email: "",
-  //     title: "",
-  //     description: "",
-  //     // password: "",
-  //     // confirmPassword: "",
-  //     // phone: "",
-  //     // gender: "",
-  //     // age: 0,
-  //     // height: 0,
-  //     // weight: 0,
-  //   },
-  //   mode: "onTouched",
-  //   resolver: yupResolver(personalDataSchema),
-  // });
-  // password: yup
-  //   .string()
-  //   .matches(
-  //     /^[A-Z][a-z0-9]{3,8}$/,
-  //     "Password must start with an Uppercase letter and 4-8 char long"
-  //   )
-  //   .required("Required"),
-  // confirmPassword: yup
-  //   .string()
-  //   .oneOf([yup.ref("password"), null], "Passwords must match"),
-  // phone: yup
-  //   .string()
-  //   .required("Required")
-  //   .matches(/^01[0125][0-9]{8}$/, "Invalid phone number"),
-  // age: yup
-  //   .number()
-  //   .typeError("Must provide a number")
-  //   .required("Required")
-  //   .min(18, "Must be 18+")
-  //   .max(100, "Must be less than 100")
-  //   .integer(),
-  // height: yup
-  //   .number()
-  //   .typeError("Must be a number")
-  //   .required("Required")
-  //   .positive("Positive number only")
-  //   .min(50, "Must be more than 50cm")
-  //   .max(250, "Must be less than 250cm")
-  //   .integer(),
-  // weight: yup
-  //   .number()
-  //   .typeError("Must be a number")
-
-  //   .required("Required")
-  //   .positive("Positive number only")
-  //   .min(5, "Must be more than 5kg")
-  //   .max(650, "Must be less than 635kg")
-  //   .integer(),
-  // picture: yup.string(),
-  // });
-
-  // const onSubmit = async (data) => {
-  //   console.log("Data", data);
-  //   // async request which may result error
-  //   try {
-  //     let response = await axios.post(
-  //       "http://localhost:4000/users/register",
-  //       data
-  //     );
-  //     console.log(response);
-  //     //setApiResponse(response.data.message);
-  //   } catch (error) {
-  //     let errorMsg = error.response.data.message;
-  //     //setApiResponse(errorMsg);
-  //   }
-  // };
-  // console.log(touchedFields, dirtyFields);
-
-  // const { onChange, onBlur, name, ref } = register("firstName");
-
-  // if (userDataQuery.isLoading) {
-  //   return <h1>Loading...</h1>;
-  // }
-
-  // if (userDataQuery.isError) {
-  //   return <pre>{JSON.stringify(userDataQuery.error)}</pre>;
-  // }
-
-  // if (userDataQuery.isSuccess) {
-  //   console.log("User Data: ", userDataQuery.data.firstName);
+  //? Logout function
+  const Logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userType");
+    window.location.href = "/";
+  };
   return (
     <>
       <div>
@@ -345,7 +209,7 @@ export default function UserSettings() {
                     <div className="row align-items-center">
                       <div className="col-lg-2 col-md-3 text-md-start text-center">
                         <img
-                          src={clientPhoto}
+                          src={picture}
                           className="avatar avatar-large rounded-circle shadow d-block mx-auto"
                         />
                       </div>
@@ -358,7 +222,13 @@ export default function UserSettings() {
                               {lastName}
                             </h3>
                             <small className="text-muted h6 me-2">
-                              {title}
+                              {title}{" "}
+                              <Link className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                                <CloudinaryWidget
+                                  // getImageURL={getImageURL}
+                                  className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                />
+                              </Link>
                             </small>
                             <ul className="list-inline mb-0 mt-3">
                               <li className="list-inline-item me-4">
@@ -575,14 +445,13 @@ export default function UserSettings() {
                         </Link>
                       </li>
                       <li className="navbar-item account-menu px-0 mt-2">
-                        <a
-                          href="auth-login-three.html"
-                          className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
-                        >
+                        <a className="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
                           <span className="h4 mb-0">
                             <i className="uil uil-dashboard" />
                           </span>
-                          <h6 className="mb-0 ms-2">Logout</h6>
+                          <h6 className="mb-0 ms-2" onClick={Logout}>
+                            Logout
+                          </h6>
                         </a>
                       </li>
                     </ul>
@@ -635,27 +504,16 @@ export default function UserSettings() {
                 <div className="card border-0 rounded shadow">
                   <div className="card-body">
                     <h5 className="text-md-start text-center">
-                      Personal Detail :
+                      Personal Details :
                     </h5>
-                    <div className="mt-3 text-md-start text-center d-sm-flex">
-                      <img
-                        src={clientPhoto}
-                        className="avatar float-md-left avatar-medium rounded-circle shadow me-md-4"
-                      />
-                      <div className="mt-md-4 mt-3 mt-sm-0">
-                        <a href="" className="btn btn-primary mt-2">
-                          Change Picture
-                        </a>
-                        <a
-                          href=""
-                          className="btn btn-outline-primary mt-2 ms-2"
-                        >
-                          Delete
-                        </a>
-                      </div>
-                    </div>
+                    {/* <div className="mt-3 text-md-start text-center d-sm-flex">
+                    <img
+                      src={picture}
+                      className="avatar float-md-left avatar-medium rounded-circle shadow me-md-4 d-inline"
+                    />{" "}
+                  </div> */}
                     {/* Personal information form */}
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} id="#upload-form">
                       <div className="row mt-4">
                         <div className="col-md-6">
                           <div className="mb-3">

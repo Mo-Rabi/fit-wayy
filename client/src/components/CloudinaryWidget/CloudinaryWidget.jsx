@@ -7,6 +7,8 @@ export default function CloudinaryWidget() {
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = token;
 
+  const userTyype = localStorage.getItem("userType")
+  console.log("CLOUINARY USER TYPE: ", userTyype);
   let [imageURL, setImageURL] = useState("");
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
@@ -26,7 +28,7 @@ export default function CloudinaryWidget() {
           setImageURL(photoURL);
           //getImageURL(photoURL);
           let response = await axios.patch(
-            "http://localhost:4000/trainer/edit",
+            `http://localhost:4000/${userTyype}/edit/photo`,
             { picture: photoURL }
           );
           console.log("response", response);

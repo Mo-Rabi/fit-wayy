@@ -51,6 +51,23 @@ const getTrainerData = async (req, res) => {
     });
   }
 };
+//? Get Trainer Data for Trainer Profile
+const getTrainerDataForProfile = async (req, res) => {
+  try {
+    let token = req.headers.authorization;
+    console.log("Token in Axios Default headers: ", token);
+    let { id } = jwt.verify(token, "SecretKeyCanBeAnything");
+    console.log("IDDDDDD", id);
+
+    let trainerData = await trainerModel.findOne({ _id: id });
+    res.json({ message: "Trainer Data: ", trainerData });
+  } catch (error) {
+    res.json({
+      message: "An Error occured while retrieving Trainer Data",
+      error,
+    });
+  }
+};
 
 //? Trainer Signup
 const signUp = async (req, res) => {
@@ -171,18 +188,16 @@ const updateTrainer = async (req, res) => {
   try {
     console.log("Request Body", req.body);
     //! req.body.token hold User/ Reviewer Token (Logged in)
-    console.log(
-      "Header Authorization from Axios Defaults",
-      req.headers.authorization
-    );
+    let token = req.headers.authorization;
+    let { id } = jwt.verify(token, "SecretKeyCanBeAnything");
+    console.log("IODDDDDD:", id);
     const {
       firstName,
       lastName,
       email,
       title,
       description,
-      picture,
-      userToken,
+      // userToken,
     } = req.body;
     console.log({
       firstName,
@@ -190,17 +205,15 @@ const updateTrainer = async (req, res) => {
       email,
       title,
       description,
-      picture,
-      userToken,
+      //userToken,
     });
 
-    if (userToken) {
-      let decodedToken = jwt.verify(userToken, "SecretKeyCanBeAnything");
-      const userId = decodedToken.id;
-      return userId;
-    }
-
-    console.log("Picture", picture);
+    // if (userToken) {
+    //   let decodedToken = jwt.verify(userToken, "SecretKeyCanBeAnything");
+    //   const userId = decodedToken.id;
+    //   return userId;
+    // }
+    // console.log("Picture", picture);`
 
     let trainerId =
       req.body.trainerId ||
@@ -216,15 +229,6 @@ const updateTrainer = async (req, res) => {
     if (email) updateFields.email = email;
     if (title) updateFields.title = title;
     if (description) updateFields.description = description;
-    if (picture) updateFields.picture = picture;
-    if (rating && comment) {
-      console.log("RATING AND COMMENT?????", rating, "&&", comment);
-      updateFields.reviews = {
-        reviewerId: decodedToken.id,
-        rating: Number(rating),
-        comment: comment,
-      };
-    }
 
     console.log("Updated Fields", updateFields);
     //!!***********! IMPORTANT ******* const trainerId =
@@ -243,6 +247,27 @@ const updateTrainer = async (req, res) => {
   }
 };
 
+//? Edit Trainer Photo
+const updateTrainerPhoto = async (req, res) => {
+  try {
+    const { picture } = req.body;
+    let token = req.headers.authorization;
+    let { id } = jwt.verify(token, "SecretKeyCanBeAnything");
+
+    let updatedTrainerPhoto = await trainerModel.findByIdAndUpdate(
+      id,
+      { picture },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "Trainer Photo was updatd successfully",
+      updatedTrainerPhoto,
+    });
+  } catch (error) {
+    res.status(400).json({ message: "Updating Trainer Photo Error: ", error });
+  }
+};
 //? Deactivate Trainer (Soft Delete)
 const deactivateAccount = async (req, res) => {
   try {
@@ -300,4 +325,6 @@ export {
   trainerSignUpVerification,
   getTrainerData,
   addReview,
+  getTrainerDataForProfile,
+  updateTrainerPhoto,
 };

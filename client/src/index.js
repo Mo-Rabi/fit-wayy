@@ -14,6 +14,7 @@ import {
   QueryDevtools,
   ReactQueryDevtools,
 } from "@tanstack/react-query-devtools";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <GoogleOAuthProvider clientId={googleAuthClientID}>
         <App />
+        <Toaster position="top-right" richColors closeButton />
       </GoogleOAuthProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
