@@ -19,7 +19,7 @@ const addReview = async (req, res) => {
 
     console.log("Review Body After", req.body);
 
-    //! Isolating block of code to test
+    //? Isolating block of code to test (Done)
     try {
       let addedReview = await reviewModel.create({
         ...req.body,
@@ -46,10 +46,13 @@ const addReview = async (req, res) => {
 //? Get All reviews of the specific user I'm standing at
 const getReviews = async (req, res) => {
   try {
-    res.json({ message: "Here's a list of all users", viewUsers });
+   const {trainerId} = req.params
+    let allReviews = await reviewModel.find({trainerId});
+    console.log("ALL REVIEWS ONITIOOOOOOOOOOOOOO",allReviews);
+    res.json({ message: "Here's a list of all users", allReviews });
   } catch (error) {
     res.json({
-      message: "An Error occured while retrieving All Users Data",
+      message: "An Error occured while retrieving All Reviews Data",
       error,
     });
   }

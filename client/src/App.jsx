@@ -27,6 +27,7 @@ import "./components/assets/js/easy_background";
 import "./components/assets/js/plugins.init";
 import VerificationSuccess from "./components/VerificationSuccess/VerificationSuccess";
 
+
 function App() {
   const routes = createBrowserRouter([
     {
