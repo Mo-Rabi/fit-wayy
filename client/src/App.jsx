@@ -28,6 +28,9 @@ import "./components/assets/js/plugins.init";
 import Allusers from "./components/AllUsers/Allusers";
 import Gymnastics from "./components/Gymnastics/Gymnastics";
 import BMI from "./components/BMI/BMI";
+import ProtectedRoutesT from "./components/ProtectedRoutesT/ProtectedRoutesT";
+import ProtectRoutes from "./components/ProtectRoutes/ProtectRoutes";
+
 
 function App() {
   const routes = createBrowserRouter([
@@ -84,9 +87,9 @@ function App() {
         { path: "user/settings", element: <UserSettings /> },
 
         { path: "trainer/settings", element: <TrainerSettings /> },
-        {path: "/all", element: <Allusers/>},
-        {path: "/gymn", element:<Gymnastics/>},
-        {path:"/bmi", element: <BMI/>}
+        {path: "/all", element: <ProtectedRoutesT><Allusers/></ProtectedRoutesT>},
+        {path: "/gymn", element:<ProtectRoutes><Gymnastics/></ProtectRoutes>},
+        {path:"/bmi", element: <ProtectRoutes><BMI/></ProtectRoutes>}
       ],
     },
   ]);

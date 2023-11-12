@@ -166,6 +166,7 @@ import { Modal, Button, Form, Container } from 'react-bootstrap';
 import './Allusers.css';
 import bg1 from '../../components/assets/images/gym/bg2.jpg';
 import bg2 from "../../components/assets/images/gym/09.jpg"
+import { Link } from 'react-router-dom';
 
 export default function Allusers() {
   const [Users, setUsers] = useState([]);
@@ -262,6 +263,7 @@ export default function Allusers() {
         <div className='fa fa-spinner fa-spin' id='sp'></div>
       ) : (
         <Container id='cont'>
+        <Link className='btn btn-outline-info d-flex mx-auto mb-3' id='bm' to={'/trainer/profile'}>Profile</Link>
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {Users.map((ele) => (
             <div className="col-md-4" key={ele.id}>

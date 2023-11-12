@@ -5,6 +5,7 @@ import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import bg2 from '../../components/assets/images/gym/bg2.jpg';
 import { Link } from 'react-router-dom';
+import "./Gymnastics.css"
 
 export default function Gymnastics() {
   const [data, setData] = useState([]);
@@ -77,7 +78,10 @@ export default function Gymnastics() {
     <div className="card bg-dark text-white">
       <img src={bg2} className="card-img" alt="Background" />
       <div className="card-img-overlay">
-        <Link className='btn btn-warning d-flex mx-auto justify-content-center mt-5 w-25' to={'/bmi'} id='bm'>Check your BMI</Link>
+        <div className='d-flex justify-content-center mt-4'>
+          <Link className='btn btn-outline-info d-flex mx-auto justify-content-center mt-5' to={'/bmi'} id='bm'>Check your BMI</Link>
+          <Link className='btn btn-outline-warning d-flex mx-auto justify-content-center mt-5' to={'/user/profile'}>Profile</Link>
+        </div>
         <div className="container mt-1">
           {isLoading ? (
             <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>

@@ -10,6 +10,7 @@ import {
   logout,
   signIn,
   userSignUpVerification,
+  updateUserPhoto
 } from "./user.controller.js";
 import { signInSchem, signUpValidationSchema } from "./user.validation.js";
 import { validation } from "../../middleware/validation.js";
@@ -38,6 +39,10 @@ userRoutes.post(
 
 //?Edit User Details
 userRoutes.patch("/user/edit", updateUser);
+
+//?Edit User Photo
+userRoutes.patch("/user/edit/photo", updateUserPhoto);
+
 
 //? Password Reset
 userRoutes.put("/users/resetPassword", resetPassword);

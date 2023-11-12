@@ -10,3 +10,9 @@
 #cont {
     padding-top: 130px;
 }
+#bm {
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    
+}

@@ -38,9 +38,10 @@ export default function TrainerLogin() {
       //setAPIResponse({ message: data.message, status: "success" });
       //localStorage.setItem("userToken", data.token);
       //setToken(data.token);
-      
-        navigate("/all");
-      
+      setTimeout(() => {
+        window.location.href = "/trainer/profile";
+      }, 3000);
+      setIsLoading(false);
     } catch (error) {
       //console.log("Error: " + err);
       // console.log(err.response.data.error);

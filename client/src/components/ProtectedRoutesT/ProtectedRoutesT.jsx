@@ -5,6 +5,6 @@ export default function ProtectedRoutesT(props) {
   if(localStorage.getItem("token")) {
     return props.children
   } else {
-    return <Navigate/>
+    return <Navigate to={"/trainers/login"}/>
   }
 }

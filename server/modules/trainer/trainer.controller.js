@@ -1,8 +1,12 @@
 import trainerModel from "../../db/model/trainer.model.js";
+import userModel from "../../db/model/user.model.js";
 import bcrypt from "bcrypt";
 import { signInSchem, signUpValidationSchema } from "./trainer.validation.js";
 import jwt from "jsonwebtoken";
 import { sendToEmail } from "../../utils/sendEmail.js";
+
+//? Add a Review
+const addReview = async (req, rest) => {};
 
 //? Retrieve all trainers
 const getAllTrainers = async (req, res) => {
@@ -18,23 +22,44 @@ const getAllTrainers = async (req, res) => {
 const getTrainerData = async (req, res) => {
   try {
     let token = req.headers.authorization;
-    let headersId = req.params.id;
+    console.log("Token in Axios Default headers: ", token);
+    let trainerId = req.params.id;
+    console.log("Params ID:", trainerId);
+    console.log("Headers TOKEEEN:", token);
+
     let id;
-    if (headersId) {
-      console.log("ID is in Params");
+    if (trainerId) {
+      console.log("ID is in Params", trainerId);
       id = req.params.id;
     }
-    if (token) {
-      console.log("ID is in token", token);
-      const decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
-      id = decodedToken.id;
-      console.log("ID in Token: ", id);
-    } else {
-      console.log("ID is not in Token nor in Params!");
-    }
+    // if (token) {
+    //   console.log("ID is in token", token);
+    //   const decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
+    //   id = decodedToken.id;
+    //   console.log("ID in Token: ", id);
+    // } else {
+    //   console.log("ID is not in Token nor in Params!");
+    // }
 
     let trainerData = await trainerModel.findOne({ _id: id });
-    console.log("Trainer Data", trainerData);
+    console.log("Found TRAINER???", trainerData);
+    res.json({ message: "Trainer Data: ", trainerData });
+  } catch (error) {
+    res.json({
+      message: "An Error occured while retrieving Trainer Data",
+      error,
+    });
+  }
+};
+//? Get Trainer Data for Trainer Profile
+const getTrainerDataForProfile = async (req, res) => {
+  try {
+    let token = req.headers.authorization;
+    console.log("Token in Axios Default headers: ", token);
+    let { id } = jwt.verify(token, "SecretKeyCanBeAnything");
+    console.log("IDDDDDD", id);
+
+    let trainerData = await trainerModel.findOne({ _id: id });
     res.json({ message: "Trainer Data: ", trainerData });
   } catch (error) {
     res.json({
@@ -162,15 +187,41 @@ const signIn = async (req, res) => {
 const updateTrainer = async (req, res) => {
   try {
     console.log("Request Body", req.body);
+    //! req.body.token hold User/ Reviewer Token (Logged in)
+    let token = req.headers.authorization;
+    let { id } = jwt.verify(token, "SecretKeyCanBeAnything");
+    console.log("IODDDDDD:", id);
+    const {
+      firstName,
+      lastName,
+      email,
+      title,
+      description,
+      // userToken,
+    } = req.body;
+    console.log({
+      firstName,
+      lastName,
+      email,
+      title,
+      description,
+      //userToken,
+    });
 
-    console.log(req.headers.authorization);
-    let token = req.body.token || req.headers.authorization;
-    console.log("Token", token);
-    const { firstName, lastName, email, title, description, picture, rating } =
-      req.body;
-    console.log(firstName, lastName, email, title, description, picture);
-    let decodedToken = jwt.verify(token, "SecretKeyCanBeAnything");
-    const trainerId = decodedToken.id;
+    // if (userToken) {
+    //   let decodedToken = jwt.verify(userToken, "SecretKeyCanBeAnything");
+    //   const userId = decodedToken.id;
+    //   return userId;
+    // }
+    // console.log("Picture", picture);`
+
+    let trainerId =
+      req.body.trainerId ||
+      jwt.verify(req.headers.authorization, "SecretKeyCanBeAnything").id;
+
+    console.log("Trainer ID from OR operator: ", trainerId);
+
+    //console.log("USER 'Reviewer ID')", userId);
     //! check what values are filled and update them, if not filled by trainer don't update them
     let updateFields = {};
     if (firstName) updateFields.firstName = firstName;
@@ -178,15 +229,15 @@ const updateTrainer = async (req, res) => {
     if (email) updateFields.email = email;
     if (title) updateFields.title = title;
     if (description) updateFields.description = description;
-    if (picture) updateFields.picture = picture;
-    if (rating) updateFields.picture = rating;
 
     console.log("Updated Fields", updateFields);
-
+    //!!***********! IMPORTANT ******* const trainerId =
     let updatedTrainerDetails = await trainerModel.findByIdAndUpdate(
       trainerId,
-      updateFields
+      updateFields,
+      { new: true }
     );
+
     res.status(200).json({
       message: "Trainer Details were updatd successfully",
       updatedTrainerDetails,
@@ -196,6 +247,27 @@ const updateTrainer = async (req, res) => {
   }
 };
 
+//? Edit Trainer Photo
+const updateTrainerPhoto = async (req, res) => {
+  try {
+    const { picture } = req.body;
+    let token = req.headers.authorization;
+    let { id } = jwt.verify(token, "SecretKeyCanBeAnything");
+
+    let updatedTrainerPhoto = await trainerModel.findByIdAndUpdate(
+      id,
+      { picture },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "Trainer Photo was updatd successfully",
+      updatedTrainerPhoto,
+    });
+  } catch (error) {
+    res.status(400).json({ message: "Updating Trainer Photo Error: ", error });
+  }
+};
 //? Deactivate Trainer (Soft Delete)
 const deactivateAccount = async (req, res) => {
   try {
@@ -252,4 +324,7 @@ export {
   signIn,
   trainerSignUpVerification,
   getTrainerData,
+  addReview,
+  getTrainerDataForProfile,
+  updateTrainerPhoto,
 };
