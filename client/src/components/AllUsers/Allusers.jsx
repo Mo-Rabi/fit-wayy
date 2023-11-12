@@ -173,7 +173,7 @@ export default function Allusers() {
   const [showModal, setShowModal] = useState(false);
   const [selectedUserEmail, setSelectedUserEmail] = useState('');
 
-  const [email, setEmail] = useState(""); // Added email state
+  const [email, setEmail] = useState(""); 
   const [userName, setUserName] = useState("");
   const [day, setDay] = useState("");
   const [name, setName] = useState("");

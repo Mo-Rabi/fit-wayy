@@ -13,7 +13,7 @@ import TrainerProfile from "./components/TrainerProfile/TrainerProfile";
 import TrainerSettings from "./components/TrainerSettings/TrainerSettings";
 import ViewTrainer from "./components/ViewTrainer/ViewTrainer";
 import Home from "./components/Home/Home";
-import Cloudinary from "./components/Cloudinary/Cloudinary"
+//import Cloudinary from "./components/Cloudinary/Cloudinary";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./components/assets/css/style.min.css";
 import "./components/assets/css/bootstrap.min.css";
@@ -40,10 +40,10 @@ function App() {
           index: true,
           element: <Home />,
         },
-        {
-          path: "cloudinary",
-          element: <Cloudinary />,
-        },
+        // {
+        //   path: "cloudinary",
+        //   element: <Cloudinary />,
+        // },
         {
           path: "trainers",
           element: <Trainers />,
@@ -85,8 +85,8 @@ function App() {
 
         { path: "trainer/settings", element: <TrainerSettings /> },
         {path: "/all", element: <Allusers/>},
-        {path: "/gymn", element: <Gymnastics/>},
-        {path: "/bmi", element: <BMI/>}
+        {path: "/gymn", element:<Gymnastics/>},
+        {path:"/bmi", element: <BMI/>}
       ],
     },
   ]);

@@ -39,7 +39,7 @@ export default function UserLogin() {
       //localStorage.setItem("userToken", data.token);
       //setToken(data.token);
       if (response.data.message === "User logged in successfully") {
-        navigate("/user/profile");
+        navigate("/gymn");
       } else if (response.data.message === "Trainer logged in successfully") {
         navigate("/trainer/profile");
       }
