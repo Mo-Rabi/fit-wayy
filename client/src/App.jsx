@@ -13,11 +13,9 @@ import TrainerSettings from "./components/TrainerSettings/TrainerSettings";
 import ViewTrainer from "./components/ViewTrainer/ViewTrainer";
 import Home from "./components/Home/Home";
 import SearchForMore from "./components/SearchForMore/SearchForMore"
+import Chat from './components/Chat/Chat'
 //import Cloudinary from "./components/Cloudinary/Cloudinary";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Calories from "./components/Calories/Calories";
-import Exercises from "./components/Exercises/Exercises"
-import Recipes from "./components/Recipes/Recipes"
 import "./components/assets/css/style.min.css";
 import "./components/assets/css/bootstrap.min.css";
 import "./components/assets/css/tiny-slider.css";
@@ -44,6 +42,10 @@ function App() {
         {
           path: "user/searchForMore",
           element: <SearchForMore />,
+        },
+        {
+          path: "chat",
+          element: <Chat />,
         },
         {
           path: "trainers/register",
