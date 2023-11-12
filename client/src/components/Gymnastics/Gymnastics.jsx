@@ -95,8 +95,6 @@ export default function Gymnastics() {
                     <div className="card-body" style={{ backgroundImage: `url(${bg2})`, backgroundSize: 'cover', color: 'white' }}>
                       <h5 className="card-title"></h5>
                       <p className="card-text">
-                        <strong>Email:</strong> {exercise.email}
-                        <br />
                         <strong>Day:</strong> {exercise.day}
                         <br />
                         <strong>Name:</strong> {exercise.name}

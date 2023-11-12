@@ -100,6 +100,10 @@ const getAllExercise = async (req, res) => {
 }
 
 
+
+
+
+
 const deleteExercise = async (req, res) => {
     try {
         const exerId = req.params.id;
