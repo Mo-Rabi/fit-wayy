@@ -7,7 +7,7 @@ export default function CloudinaryWidget() {
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = token;
 
-  const userTyype = localStorage.getItem("userType")
+  const userTyype = localStorage.getItem("userType");
   console.log("CLOUINARY USER TYPE: ", userTyype);
   let [imageURL, setImageURL] = useState("");
   const cloudinaryRef = useRef();
@@ -19,7 +19,10 @@ export default function CloudinaryWidget() {
       {
         cloudName: "dequqpbe8",
         uploadPreset: "cloudinary-custom-preset",
+        cropping: "true",
+        croppingCoordinatesMode: "custom",
       },
+
       async function (error, result) {
         // console.log("Result", result);
         let photoURL = result.info.secure_url;

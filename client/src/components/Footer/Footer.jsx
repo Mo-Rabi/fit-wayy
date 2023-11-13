@@ -20,13 +20,13 @@ export default function Footer() {
                     <img src={logo} height={60} alt />
                   </a>
                   <p className="mt-4">
-                    Start working with Landrick that can provide everything you
+                    Start working with FitWay that can provide everything you
                     need to generate awareness, drive traffic, connect.
                   </p>
                   <ul className="list-unstyled social-icon foot-social-icon mb-0 mt-4">
                     <li className="list-inline-item mb-0">
                       <a
-                        href="https://1.envato.market/landrick"
+                        href="https://1.envato.market/FitWay"
                         target="_blank"
                         className="rounded"
                       >
@@ -243,7 +243,7 @@ export default function Footer() {
               <div className="text-sm-start">
                 <p className="mb-0">
                   ©2023 FitWay&nbsp;
-                  <i className="mdi mdi-heart text-danger" /> by&nbsp; 
+                  <i className="mdi mdi-heart text-danger" /> by&nbsp;
                   <a
                     href="https://shreethemes.in/"
                     target="_blank"
