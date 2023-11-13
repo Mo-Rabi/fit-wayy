@@ -9,7 +9,7 @@ import visa from "../assets/images/payment/visa.png";
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer ">
       <div className="container">
         <div className="row">
           <div className="col-12">

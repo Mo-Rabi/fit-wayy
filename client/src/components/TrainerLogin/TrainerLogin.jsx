@@ -30,6 +30,7 @@ export default function TrainerLogin() {
         "http://localhost:4000/trainers/login",
         values
       );
+      console.log("Errr", response)
       console.log("ResponseMsg: ", response.data.message);
       console.log("ResponseStatus: ", response.status);
 
