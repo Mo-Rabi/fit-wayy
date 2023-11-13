@@ -84,9 +84,11 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <a href="corporate-services.html" className="sub-menu-item">
+              <Link to={"user/plan"} className="sub-menu-item">
                 Services
-              </a>
+              </Link>
+              <li>
+          </li>
             </li>
             <li className="has-submenu parent-parent-menu-item">
               <a href="#">Pages</a>

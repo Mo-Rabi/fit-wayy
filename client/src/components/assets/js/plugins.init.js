@@ -34,6 +34,7 @@
 /*            01) Tiny slider              */
 //=========================================//
 
+
 if(document.getElementsByClassName('tiny-single-item').length > 0) {
     var slider = tns({
         container: '.tiny-single-item',
@@ -571,6 +572,15 @@ try {
             }
         }
     }
+    const element = document.getElementById('grid');
+if (element) {
+  // Instantiate Shuffle here
+  const shuffleInstance = new Shuffle(element, {
+    itemSelector: '.picture-item',
+    sizer: element.querySelector('.my-sizer-element'),
+  });
+}
+
 
     document.addEventListener('DOMContentLoaded', () => {
         window.demo = new Demo(document.getElementById('grid'));
