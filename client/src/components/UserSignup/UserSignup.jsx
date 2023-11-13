@@ -106,6 +106,7 @@ export default function UserSignup() {
         "http://localhost:4000/users/register",
         data
       );
+      console.log(response);
       setApiResponse(response.data.message);
     } catch (error) {
       let errorMsg = error.response.data.message;

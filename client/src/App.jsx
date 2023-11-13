@@ -26,8 +26,13 @@ import "./components/assets/js/app";
 import "./components/assets/js/easy_background";
 import "./components/assets/js/plugins.init";
 import VerificationSuccess from "./components/VerificationSuccess/VerificationSuccess";
+import Paypal from "./components/paypal/paypal";
+import {useState } from "react";
+
 
 function App() {
+  const [price, setPrice] = useState(0);
+
   const routes = createBrowserRouter([
     {
       path: "",
@@ -56,7 +61,7 @@ function App() {
         },
         {
           path: "trainer/profile/:id",
-          element: <ViewTrainer />,
+          element: <ViewTrainer setPrice={setPrice}/>,
         },
         {
           path: "trainer/settings",
@@ -83,10 +88,12 @@ function App() {
 
         { path: "trainer/settings", element: <TrainerSettings /> },
         { path: "verification/success", element: <VerificationSuccess /> },
+        {path:"paypal" , element:<Paypal price={price}/>},
       ],
     },
   ]);
-  return <RouterProvider router={routes}></RouterProvider>;
+  return <RouterProvider router={routes}></RouterProvider>
+
 }
 
 export default App;

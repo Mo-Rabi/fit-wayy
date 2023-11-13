@@ -441,7 +441,7 @@ export default function UserSignup() {
                       type="submit"
                       className="btn text-white col-12"
                       style={{ backgroundColor: "#36b37e", fontWeight: 700 }}
-                      onClick={scrollToTop}
+                      // onClick={scrollToTop}
                     >
                       Sign Up
                     </button>

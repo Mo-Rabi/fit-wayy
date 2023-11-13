@@ -14,7 +14,7 @@ import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
 import { useForm, Controller } from "react-hook-form";
 
-export default function ViewTrainer() {
+export default function ViewTrainer({setPrice}) {
   //?Track server response message and status
   let [apiResponse, setApiResponse] = useState({ message: "", status: "" });
   //? Gather review data and send to the server to save in DB
@@ -78,12 +78,13 @@ export default function ViewTrainer() {
     queryFn: async () => {
       let { data } = await axios.get(`http://localhost:4000/trainerData/${id}`);
       const trainerData = data.trainerData;
+      setPrice(trainer.price)
       return trainerData;
     },
   });
 
   const trainer = trainerDataQuery.data;
-
+   console.log(trainer);
   if (trainerDataQuery.isLoading) return <h1>Loading...</h1>;
   if (trainerDataQuery.isError)
     return <pre>{JSON.stringify(trainerDataQuery.error)}</pre>;
@@ -147,7 +148,8 @@ export default function ViewTrainer() {
               {trainer.rating}
             </p>
             <p className="text-white fw-bold">Trainees no.: *Placeholder*</p>
-            <button className="btn btn-success">Book now!</button>
+            <Link to={"/paypal"}><button className="btn btn-success ">Book now!</button></Link>
+
           </div>
         </div>
         <div className="row d-flex justify-content-center mb-5">

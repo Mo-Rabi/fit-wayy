@@ -14,6 +14,8 @@ import {
   QueryDevtools,
   ReactQueryDevtools,
 } from "@tanstack/react-query-devtools";
+import {PayPalScriptProvider} from "@paypal/react-paypal-js";
+
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,9 @@ const googleAuthClientID = process.env.REACT_APP_CLIENT_ID;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  <PayPalScriptProvider 
+  options={{"client-id":"AbhJO1mTvJs_QoYtCBHwGu1C6wGhJu2FONENLw9nmUVp_YUOYIjk0gFAHetkgUmPLu2SYL60y4XegAdE"}}
+>
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <GoogleOAuthProvider clientId={googleAuthClientID}>
@@ -29,6 +34,7 @@ root.render(
       <ReactQueryDevtools />
     </QueryClientProvider>
   </React.StrictMode>
+  </PayPalScriptProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
