@@ -57,7 +57,14 @@ const userSchema = new mongoose.Schema(
         timeStamp: Date,
       },
     ],
+    exercises: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Exercis"
+      }
+    ]
   },
+
   {
     timestamps: true,
   }

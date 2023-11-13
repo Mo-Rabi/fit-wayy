@@ -240,15 +240,15 @@ export default function UserProfile() {
                       </Link>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
-                      <a
-                        href="account-members.html"
+                      <Link
+                        to={"/gymn"}
                         className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
                       >
                         <span className="h4 mb-0">
-                          <i className="uil uil-users-alt" />
+                        <i class="fa-solid fa-dumbbell"></i>
                         </span>
-                        <h6 className="mb-0 ms-2">Members</h6>
-                      </a>
+                        <h6 className="mb-0 ms-2">Exercises</h6>
+                      </Link>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
                       <a

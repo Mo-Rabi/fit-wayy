@@ -249,7 +249,7 @@ export default function TrainerProfile() {
                         <span className="h4 mb-0">
                           <i className="uil uil-trainers-alt" />
                         </span>
-                        <h6 className="mb-0 ms-2">Members</h6>
+                        <Link className="mb-0 ms-2 text-dark" to={'/all'}><span ><i className="fa-solid fa-plus me-2"></i></span>Add Exercise</Link>
                       </a>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">

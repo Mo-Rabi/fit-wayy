@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+
 import "./App.css";
 import Layout from "./components/Layout/Layout";
 import Trainers from "./components/Trainers/Trainers";
@@ -27,7 +27,11 @@ import "./components/assets/sass/_topbar.scss";
 import "./components/assets/js/app";
 import "./components/assets/js/easy_background";
 import "./components/assets/js/plugins.init";
-import VerificationSuccess from "./components/VerificationSuccess/VerificationSuccess";
+import Allusers from "./components/AllUsers/Allusers";
+import Gymnastics from "./components/Gymnastics/Gymnastics";
+import BMI from "./components/BMI/BMI";
+import ProtectedRoutesT from "./components/ProtectedRoutesT/ProtectedRoutesT";
+import ProtectRoutes from "./components/ProtectRoutes/ProtectRoutes";
 import ChatOfUser from "./components/ChatOfUser/ChatOfUser";
 
 
@@ -100,7 +104,9 @@ function App() {
         { path: "user/settings", element: <UserSettings /> },
 
         { path: "trainer/settings", element: <TrainerSettings /> },
-        { path: "verification/success", element: <VerificationSuccess /> },
+        {path: "/all", element: <ProtectedRoutesT><Allusers/></ProtectedRoutesT>},
+        {path: "/gymn", element:<ProtectRoutes><Gymnastics/></ProtectRoutes>},
+        {path:"/bmi", element: <ProtectRoutes><BMI/></ProtectRoutes>},
         { path: "*", element: <NotFound /> },
       ],
     },
@@ -109,3 +115,5 @@ function App() {
 }
 
 export default App;
+
+
