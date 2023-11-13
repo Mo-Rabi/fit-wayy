@@ -14,18 +14,28 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
+      //required: true,
       unique: true,
     },
     password: {
       type: String,
-      required: true,
+     // required: true,
     },
-    phone: { type: String, required: true },
-    age: { type: Number, required: true },
-    gender: { type: String, required: true },
-    weight: { type: Number, required: true },
-    height: { type: Number, required: true },
+    phone: { type: String, 
+      //required: true
+     },
+    age: { type: Number, 
+    //required: true 
+    },
+    gender: { type: String, 
+      //required: true 
+    },
+    weight: { type: Number,
+       //required: true 
+      },
+    height: { type: Number, 
+      //required: true 
+    },
     plan: { type: Object, default: {} },
     picture: {
       type: String,

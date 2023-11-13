@@ -18,10 +18,10 @@ const trainerRoutes = express.Router();
 //?Get All Trainers
 trainerRoutes.get("/trainers", getAllTrainers);
 
-//? Get Trainer Details
-trainerRoutes.get("/trainerData", getTrainerData);
+//! Get Trainer Details
+// trainerRoutes.get("/trainerData", getTrainerData);
 
-//? Get Trainer Details
+//! Get Trainer Details
 trainerRoutes.get("/trainerData/:id", getTrainerData);
 
 //? Trainer Signup
@@ -42,7 +42,8 @@ trainerRoutes.post(
 );
 
 //?Edit Trainer Details
-trainerRoutes.patch("/trainer/edit", updateTrainer);
+trainerRoutes.patch("/trainer/edit/", updateTrainer);
+
 
 //? Password Reset
 trainerRoutes.put("/trainers/resetPassword", resetPassword);
