@@ -32,29 +32,34 @@ export default function Gymplans() {
   }
 
   const [filp, setFlip] = useState(false)
-  {/*const [biceps,allbiceps] =useState([])
-  async function getData() {
-    try {
-      let {data} = await axios.get("https://api.api-ninjas.com/v1/exercises?muscle=biceps", {
+  const [gif, getGifExercises] = useState([])
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const options = {
+        method: 'GET',
+        url: 'https://exercisedb.p.rapidapi.com/exercises',
+        params: { limit: '10' },
         headers: {
-          'X-Api-Key': 'yeyrGErgV4pVZonsv2nqsHgxjACGQBsimdYWObME'
-        }
-      });
-      console.log(data);
-      allbiceps(data);
-    } catch (error) {
-      console.error('Error:', error.message);
-      if (error.response) {
-        console.error('Response status:', error.response.status);
-        console.error('Response data:', error.response.data);
+          'X-RapidAPI-Key': 'f9dd725c93msh0bc7a1528d1187bp17edf3jsn0a9d65571d92',
+          'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com',
+        },
+      };
+
+      try {
+        const response = await axios.request(options);
+        console.log(response.data);
+        getGifExercises(response.data);
+      } catch (error) {
+        console.error(error);
       }
-    }
-    
-  }
-  useEffect(()=>{
-    getData();
-  
-  },[])*/}
+    };
+    fetchData();
+  }, []);
+
+
 
 
 
@@ -387,6 +392,30 @@ export default function Gymplans() {
         <input className={style.inputTask} type="text" ref={inputRef} placeholder='Enter the exercise' />
         <button onClick={handler} className='btn btn-primary'>Add</button>
 
+      </div>
+<div>
+<span className='text-capitalize fs-3 text-primary position-relative top-0 ps-3 translate-middle'>warm-up exercises</span>
+
+</div>
+
+
+      <div style={{
+        flexWrap: 'wrap', height: "auto",
+        display: 'flex',
+      }} className="showExercises">
+
+        {gif.map((data) => (
+          <div key={data.id}>
+            <div className="card" style={{ width: '18rem' }}>
+              <img src={data.gifUrl} className="card-img-top" alt="..." />
+              <div className="card-body">
+                <h5 className="card-title text-primary">{data.bodyPart}</h5>
+                <p className="card-text">{data.equipment}</p>
+
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
     </>
