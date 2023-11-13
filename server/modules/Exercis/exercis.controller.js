@@ -97,7 +97,27 @@ const getAllExercise = async (req, res) => {
         console.error('Error:', error);
         res.status(500).json({ message: "Error", error });
     }
-}
+} 
+
+// const getAllExercise = async (req, res) => {
+//     try {
+//         const userId = req.params.userId; // Assuming the user ID is passed as a route parameter
+
+//         // Find the user by ID and populate the 'exercises' field
+//         const user = await userModel.findById(userId).populate('exercises');
+
+//         if (!user) {
+//             return res.status(404).json({ message: "User not found" });
+//         }
+
+//         const userExercises = user.exercises;
+
+//         res.status(200).json({ message: "Exercises requested successfully", exercises: userExercises });
+//     } catch (error) {
+//         console.error('Error:', error);
+//         res.status(500).json({ message: "Error", error });
+//     }
+// }
 
 
 
@@ -141,10 +161,25 @@ const completedExercises = async (req, res) => {
     }
 }
 
+const deleteUser = async(req, res) => {
+    try{
+        const userId = req.params.id
+        const deletedUser = await userModel.deleteOne({_id: userId})
+        if(!deletedUser) {
+            res.status(400).json({message: "Not deleted"})
+        }else {
+            res.status(200).json({message: "Deleted successfully"})
+        }
+    } catch(error) {
+        res.status(500).json({message: "Error", error})
+    }
+}
+
 export {
     addExercise,
     getAllExercise,
     deleteExercise,
     allUsers,
-    completedExercises
+    completedExercises,
+    deleteUser
 }
