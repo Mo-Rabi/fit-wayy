@@ -28,6 +28,10 @@ export default function TrainerLogin() {
         values
       );
       setIsLoading(false);
+      console.log("Errr", response)
+      console.log("ResponseMsg: ", response.data.message);
+      console.log("ResponseStatus: ", response.status);
+
       let { token } = response.data;
       console.log("Token: " + token);
       //TODO Migrate from local storage to fully rely on httpOnly cookies //TODO

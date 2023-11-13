@@ -85,6 +85,9 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="has-submenu parent-parent-menu-item">
+              <a href="/user/searchForMore">Search for info</a>
+            </li>
+            <li className="has-submenu parent-parent-menu-item">
               <a href="#">Pages</a>
               <span className="menu-arrow" />
               <ul className="submenu">

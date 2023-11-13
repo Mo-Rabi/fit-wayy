@@ -1,6 +1,5 @@
 
 import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
 import Layout from "./components/Layout/Layout";
 import Trainers from "./components/Trainers/Trainers";
 import UserSignup from "./components/UserSignup/UserSignup";
@@ -13,6 +12,9 @@ import TrainerProfile from "./components/TrainerProfile/TrainerProfile";
 import TrainerSettings from "./components/TrainerSettings/TrainerSettings";
 import ViewTrainer from "./components/ViewTrainer/ViewTrainer";
 import Home from "./components/Home/Home";
+import SearchForMore from "./components/SearchForMore/SearchForMore"
+import ChatOfTrainer from './components/ChatOfTrainer/ChatOfTrainer'
+import NotFound from './components/NotFound/NotFound'
 //import Cloudinary from "./components/Cloudinary/Cloudinary";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./components/assets/css/style.min.css";
@@ -30,6 +32,7 @@ import Gymnastics from "./components/Gymnastics/Gymnastics";
 import BMI from "./components/BMI/BMI";
 import ProtectedRoutesT from "./components/ProtectedRoutesT/ProtectedRoutesT";
 import ProtectRoutes from "./components/ProtectRoutes/ProtectRoutes";
+import ChatOfUser from "./components/ChatOfUser/ChatOfUser";
 
 
 function App() {
@@ -43,10 +46,24 @@ function App() {
           index: true,
           element: <Home />,
         },
-        // {
-        //   path: "cloudinary",
-        //   element: <Cloudinary />,
-        // },
+        {
+          path: "user/searchForMore",
+          element: <SearchForMore />,
+        },
+        {
+          path: "trainer/chatOfTrainer",
+          element: <ChatOfTrainer />,
+        },
+        {
+          path: "user/chatOfUser",
+          element: <ChatOfUser />,
+        },
+        {
+          path: "trainers/register",
+          element: <TrainerSignup />,
+          // path: "cloudinary",
+          // element: <Cloudinary />,
+        },
         {
           path: "trainers",
           element: <Trainers />,
@@ -89,7 +106,8 @@ function App() {
         { path: "trainer/settings", element: <TrainerSettings /> },
         {path: "/all", element: <ProtectedRoutesT><Allusers/></ProtectedRoutesT>},
         {path: "/gymn", element:<ProtectRoutes><Gymnastics/></ProtectRoutes>},
-        {path:"/bmi", element: <ProtectRoutes><BMI/></ProtectRoutes>}
+        {path:"/bmi", element: <ProtectRoutes><BMI/></ProtectRoutes>},
+        { path: "*", element: <NotFound /> },
       ],
     },
   ]);

@@ -130,15 +130,15 @@ export default function TrainerProfile() {
                               </a>
                             </li>
                             <li className="list-inline-item me-1">
-                              <a
-                                href=""
+                              <Link
+                                to={'/trainer/chatOfTrainer'}
                                 className="rounded"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="bottom"
                                 title="Messages"
                               >
                                 <i className="uil uil-comment align-middle" />
-                              </a>
+                              </Link>
                             </li>
                             <li className="list-inline-item me-1">
                               <a
@@ -264,15 +264,15 @@ export default function TrainerProfile() {
                       </a>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
-                      <a
-                        href="account-chat.html"
+                      <Link
+                        to={'/trainer/chatOfTrainer'}
                         className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
                       >
                         <span className="h4 mb-0">
                           <i className="uil uil-comment" />
                         </span>
                         <h6 className="mb-0 ms-2">Chat</h6>
-                      </a>
+                      </Link>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
                       <a
