@@ -94,16 +94,16 @@ export default function ChatOfTrainer() {
     if (!timeStamp) {
       return "Timestamp not available";
     }
-  
+
     const date = new Date(timeStamp);
-  
+
     if (isNaN(date)) {
       return "Invalid Date";
     }
-  
+
     return date.toLocaleTimeString();
   };
-  
+
   const [reversedMessages, setReversedMessages] = useState([]);
 
   // Fetch messages when the component mounts or when a new user is selected
@@ -112,14 +112,14 @@ export default function ChatOfTrainer() {
       if (selectedUser && currentTrainerName) {
         // Assuming messages are stored in the user's data
         const userMessages = selectedUser.messages || [];
-        
+
         // Filter messages based on the current trainer
         const filteredMessages = userMessages.filter(
           (message) =>
             message.sender === currentTrainerName.email ||
             message.recipient === currentTrainerName.email
         );
-        
+
         // Reverse the order of messages (newest first)
         const reversedOrder = filteredMessages.slice().reverse();
         setReversedMessages(reversedOrder);
@@ -156,7 +156,7 @@ export default function ChatOfTrainer() {
 
       if (response.ok) {
         console.log('Message sent successfully');
-        setMessages([...messages, { sender: currentTrainerName.email, text: newMessage, timeStamp: new Date() }]);
+        setReversedMessages([...reversedMessages, { text: newMessage, timeStamp: new Date() }]);
         setNewMessage('');
       } else {
         const errorData = await response.json();
@@ -194,9 +194,9 @@ export default function ChatOfTrainer() {
                 <div style={{ height: '400px', overflowY: 'scroll', border: '1px solid gray' }}>
                   <h5 className="text-center"><i className="fa-regular fa-circle-user"></i> {selectedUser.firstName} {selectedUser.lastName}</h5>
                   {reversedMessages.map((message) => (
-                    <div key={message._id} style={{border: '1px gray solid', margin: '2% 1%', padding: '1%'}}>
+                    <div key={message._id} className={`${styles.messagecontainer} ${message.sender === currentTrainerName.email ? `${styles.trainermessage}` : `${styles.usermessage}`}`}>
                       <strong className="d-block">{message.text}</strong>
-                      <p style={{fontSize: '9px', display: 'block'}}>{formatTimestamp(message.timeStamp)}</p>
+                      <p style={{ fontSize: '9px', display: 'block' }}>{formatTimestamp(message.timeStamp)}</p>
                     </div>
                   ))}
                 </div>

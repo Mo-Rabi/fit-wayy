@@ -10,6 +10,8 @@ import Form from "react-bootstrap/Form";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import VideoBg from "../assets/videoBg.mp4";
+import LightLogo from "../assets/images/logo-light.png";
 
 export default function UserLogin() {
   let navigate = useNavigate();
@@ -35,24 +37,31 @@ export default function UserLogin() {
       localStorage.setItem("token", token);
       let { id } = jwtDecode(token);
       console.log("ID: ", id);
+      setAPIResponse({
+        message: response.data.message,
+        status: response.status,
+      });
       //setAPIResponse({ message: data.message, status: "success" });
       //localStorage.setItem("userToken", data.token);
       //setToken(data.token);
-      if (response.data.message === "User logged in successfully") {
-        navigate("/user/profile");
-      } else if (response.data.message === "Trainer logged in successfully") {
-        navigate("/trainer/profile");
-      }
+      setTimeout(() => {
+        localStorage.setItem("userType", "user");
+        window.location.href = "/user/profile";
+      }, 3000);
+      // else if (response.data.message === "Trainer logged in successfully") {
+      //   navigate("/trainer/profile"); }
     } catch (error) {
       //console.log("Error: " + err);
       // console.log(err.response.data.error);
       setIsLoading(false);
       console.log(error);
       let errorMsg = error.response.data.message;
-      console.log(errorMsg);
-      // Set the error message in state or a variable that can be accessed in the JSX
-      setError(errorMsg);
-      // setAPIResponse({ message: err.response.data.error, status: "error" });
+      let errorStatus = error.response.status;
+
+      setAPIResponse({
+        message: errorMsg,
+        status: errorStatus,
+      });
     }
   }
   //?Validation schema
@@ -75,113 +84,123 @@ export default function UserLogin() {
     },
   });
 
-  return (
-    <div className="container my-5">
-      <div className="user my-3">
-        <h4 className="text-center">
-          <i className="far fa-edit user-icon" />
-          &nbsp; Login to read your whispers
-        </h4>
-        {error ? (
-          <div className="alert alert-danger p-1">
-            <i className="fa fa-triangle-exclamation text-danger "></i> &nbsp;
-            {error}
-          </div>
-        ) : null}
+  console.log("API Response: ", apiResponse);
 
-        {apiResponse.status === "success" ? (
-          <div className="alert alert-success text-center fw-bold">
-            <i
-              className="fa-solid fa-check fa-bounce"
-              style={{ color: "#5ac115" }}
-            ></i>
-            &nbsp;
-            {apiResponse.message}
+  return (
+    <div className="row position-relative">
+      <video
+        autoPlay
+        loop
+        muted
+        className="p-0 m-0 video-background position-absolute w-100"
+      >
+        <source src={VideoBg} type="video/mp4" />
+      </video>
+      <div className="container mt-3 py-5">
+        <div className="card p-5 w-50 m-auto bg-transparent">
+          <div className="text-center mb-3">
+            <img src={LightLogo} alt="logo" width={200} />
           </div>
-        ) : apiResponse.status === "error" ? (
-          <div className="alert alert-danger text-center fw-bold">
-            <i
-              className="fa-solid fa-xmark fa-bounce"
-              style={{ color: "#df210c" }}
-            ></i>
-            &nbsp;
-            <i
-              className="fa-light fa-circle-exclamation"
-              style="color: #ff0000;"
-            ></i>
-            {apiResponse.message}
+          <div className="text-center">
+            {/* {error ? (
+            <div className="alert alert-danger p-1">
+              <i className="fa fa-triangle-exclamation "></i> &nbsp;
+              {error}
+            </div>
+          ) : null} */}
+
+            {apiResponse.status === 200 ? (
+              <div className="alert alert-success text-center fw-bold">
+                <i
+                  className="fa-solid fa-check fa-bounce text-white"
+                  style={{ color: "#5ac115" }}
+                ></i>
+                &nbsp;&nbsp;
+                {apiResponse.message}
+              </div>
+            ) : apiResponse.status === 404 ? (
+              <div className="alert alert-danger text-center fw-bold">
+                <i
+                  className="fa-solid fa-triangle-exclamation fa-bounce text-white"
+                  style={{ color: "#df210c" }}
+                ></i>
+                &nbsp;
+                {apiResponse.message}
+              </div>
+            ) : null}
           </div>
-        ) : null}
-      </div>
-      <div className="card p-5 w-50 m-auto">
-        <form onSubmit={formik.handleSubmit}>
-          <FloatingLabel
-            controlId="floatingEmail"
-            label="Email"
-            className="mb-2"
-          >
-            <label htmlFor="email"></label>
-            <Form.Control
-              placeholder="Enter your Email"
-              type="email"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-          </FloatingLabel>
-          {formik.errors.email && formik.touched.email ? (
-            <div className="alert alert-danger">{formik.errors.email}</div>
-          ) : null}
-          <FloatingLabel
-            controlId="floatingPassword"
-            label="Password"
-            className="mb-2 mt-4"
-          >
-            <label htmlFor="password"></label>
-            <Form.Control
-              placeholder="Enter your Password"
-              type="password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-          </FloatingLabel>
-          {formik.errors.password && formik.touched.password ? (
-            <div className="alert alert-danger">{formik.errors.password}</div>
-          ) : null}
-          <button
-            type="submit"
-            className="btn btn-outline-dark my-4 w-100 rounded"
-          >
-            {isLoading ? (
-              <Spinner animation="border" variant="secondary" />
-            ) : (
-              "Login"
-            )}
-          </button>
-          {/* Login With Google */}
-          <GoogleLogin
-            onSuccess={async (credentialResponse) => {
-              const decodedData = jwtDecode(credentialResponse.credential);
-              let { name, email, picture } = decodedData;
-              console.log(decodedData);
-              //console.log(name, email, picture);
-              let response = await axios.post(
-                "https://zen-task.onrender.com/profile",
-                decodedData
-              );
-              console.log(response.data);
-              console.log(localStorage.setItem("token", response.data.token));
-              navigate("/profile");
-            }}
-            onError={() => {
-              console.log("Login Failed");
-            }}
-            useOneTap
-          />
-          {/* <button
+
+          <form onSubmit={formik.handleSubmit}>
+            <FloatingLabel controlId="floatingEmail" label="Email">
+              <label htmlFor="email"></label>
+              <Form.Control
+                placeholder="Enter your Email"
+                type="email"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </FloatingLabel>
+            {formik.errors.email && formik.touched.email ? (
+              <div className="alert alert-danger mt-1">
+                {formik.errors.email}
+              </div>
+            ) : null}
+            <FloatingLabel
+              controlId="floatingPassword"
+              label="Password"
+              className="mb-2 mt-4"
+            >
+              <label htmlFor="password"></label>
+              <Form.Control
+                placeholder="Enter your Password"
+                type="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </FloatingLabel>
+            {formik.errors.password && formik.touched.password ? (
+              <div className="alert alert-danger">{formik.errors.password}</div>
+            ) : null}
+            <button
+              type="submit"
+              className="btn btn-outline-primary my-4 w-100 rounded"
+            >
+              {isLoading ? (
+                <Spinner animation="border" variant="secondary" />
+              ) : (
+                "Login"
+              )}
+            </button>
+            {/* Login With Google */}
+            <div className="container col-6">
+              <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  const decodedData = jwtDecode(credentialResponse.credential);
+                  let { name, email, picture } = decodedData;
+                  console.log(decodedData);
+                  //console.log(name, email, picture);
+                  let response = await axios.post(
+                    "https://zen-task.onrender.com/profile",
+                    decodedData
+                  );
+                  console.log(response.data);
+                  console.log(
+                    localStorage.setItem("token", response.data.token)
+                  );
+                  navigate("/profile");
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+                useOneTap
+              />
+            </div>
+
+            {/* <button
             className="btn btn-outline-secondary text-black rounded-pill col-12 mb-5"
             //onClick={() => auth()}
           >
@@ -192,13 +211,14 @@ export default function UserLogin() {
             <p className="d-inline pt-0 ms-1" />
             Continue with Google
           </button> */}
-          <h6 className="text-center">
-            Don't have an account?
-            <Link to={"/users/register"} className="link-dark fw-bold">
-              Register
-            </Link>
-          </h6>
-        </form>
+            <h6 className="text-center text-white mt-3">
+              Don't have an account?&nbsp;
+              <Link to={"/users/register"} className="link fw-bold">
+                Register
+              </Link>
+            </h6>
+          </form>
+        </div>
       </div>
     </div>
   );

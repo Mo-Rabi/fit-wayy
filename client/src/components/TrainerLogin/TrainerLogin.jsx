@@ -49,6 +49,7 @@ export default function TrainerLogin() {
       //localStorage.setItem("userToken", data.token);
       //setToken(data.token);
       setTimeout(() => {
+        localStorage.setItem("userType", "trainer");
         window.location.href = "/trainer/profile";
       }, 3000);
       setIsLoading(false);

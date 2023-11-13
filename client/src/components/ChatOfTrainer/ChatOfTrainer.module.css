@@ -6,12 +6,38 @@
     justify-content: center;
     align-items: center;
     margin-top: 15%;
+
 }
 .chatContainer{
     height: fit-content;
     width: 85vw;
     background-color: #475d68;
+    border-radius: 10px;
+    box-shadow: 0.5px 1px 3px 5px  #516068 ;
 }
 .usersNames{
     list-style: none;
 }
+
+.messagecontainer {
+    border: 1px solid gray;
+    margin: 2% 1%;
+    padding: 1%;
+  }
+
+.usermessage {
+    background-color: #c07676; /* or any color you prefer */
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    
+  }
+  
+  .trainermessage {
+    background-color: #8caabe; /* or any color you prefer */
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    /* Add other styles as needed */
+  }
+  

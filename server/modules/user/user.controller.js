@@ -28,7 +28,7 @@ const getUserData = async (req, res) => {
     console.log("User ID: ", userId);
 
     let userData = await userModel.findOne({ _id: userId });
-    console.log("FOUND USER?: ",userData);
+    console.log("FOUND USER?: ", userData);
     res.json({ message: "User Data: ", userData });
   } catch (error) {
     res.json({ message: "An Error occured while retrieving User Data", error });
@@ -38,6 +38,7 @@ const getUserData = async (req, res) => {
 //? User Signup
 const signUp = async (req, res) => {
   try {
+    console.log("INSIDE SIGN UP");
     let { error } = signUpValidationSchema.validate(req.body, {
       abortEarly: false,
     });
@@ -174,6 +175,27 @@ const updateUser = async (req, res) => {
     res.status(400).json({ message: "Updating User Error: ", error });
   }
 };
+//? Edit User Photo
+const updateUserPhoto = async (req, res) => {
+  try {
+    const { picture } = req.body;
+    let token = req.headers.authorization;
+    let { id } = jwt.verify(token, "SecretKeyCanBeAnything");
+
+    let updatedUserPhoto = await userModel.findByIdAndUpdate(
+      id,
+      { picture },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "User Photo was updatd successfully",
+      updatedUserPhoto,
+    });
+  } catch (error) {
+    res.status(400).json({ message: "Updating User Photo Error: ", error });
+  }
+};
 
 //? Deactivate User (Soft Delete)
 const deactivateAccount = async (req, res) => {
@@ -231,4 +253,5 @@ export {
   logout,
   signIn,
   userSignUpVerification,
+  updateUserPhoto,
 };

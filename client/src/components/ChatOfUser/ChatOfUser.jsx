@@ -6,7 +6,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
 
-export default function Chat() {
+export default function ChatOfUser() {
   const [users, setUsers] = useState([]);
   const [trainers, setTrainers] = useState([]);
   const [selectedTrainer, setselectedTrainer] = useState('');
@@ -66,16 +66,16 @@ export default function Chat() {
     if (!timeStamp) {
       return "Timestamp not available";
     }
-  
+
     const date = new Date(timeStamp);
-  
+
     if (isNaN(date)) {
       return "Invalid Date";
     }
-  
+
     return date.toLocaleTimeString();
   };
-  
+
   const [reversedMessages, setReversedMessages] = useState([]);
 
   useEffect(() => {
@@ -83,14 +83,14 @@ export default function Chat() {
       if (selectedTrainer && currentUser) {
         // Assuming messages are stored in the trainers's data
         const trainerMessages = selectedTrainer.messages || [];
-        
+
         // Filter messages based on the current user
         const filteredMessages = trainerMessages.filter(
           (message) =>
             message.sender === currentUser.email ||
             message.recipient === selectedTrainer.email
         );
-        
+
         // Reverse the order of messages (newest first)
         const reversedOrder = filteredMessages.slice().reverse();
         setReversedMessages(reversedOrder);
@@ -127,7 +127,11 @@ export default function Chat() {
 
       if (response.ok) {
         console.log('Message sent successfully');
-        setMessages([...messages, { sender: currentUser.email, text: newMessage, timeStamp: new Date() }]);
+        setReversedMessages([
+          ...reversedMessages,
+          { recipient: selectedTrainer.email, sender: currentUser.email, text: newMessage, timeStamp: new Date() },
+        ]);
+        console.log(reversedMessages);
         setNewMessage('');
       } else {
         const errorData = await response.json();
@@ -165,9 +169,15 @@ export default function Chat() {
                 <div style={{ height: '400px', overflowY: 'scroll', border: '1px solid gray' }}>
                   <h5 className="text-center"><i className="fa-regular fa-circle-user"></i> {selectedTrainer.firstName} {selectedTrainer.lastName}</h5>
                   {reversedMessages.map((message) => (
-                    <div key={message._id} style={{border: '1px gray solid', margin: '2% 1%', padding: '1%'}}>
-                      <strong className="d-block">{message.text}</strong>
-                      <p style={{fontSize: '9px', display: 'block'}}>{formatTimestamp(message.timeStamp)}</p>
+                    <div
+                      key={message._id}
+                      className={`${styles.messagecontainer} ${message.sender === currentUser.email ? `${styles.usermessage}` : `${styles.trainermessage}`
+                        }`}
+                    >
+                      <strong className="d-block">{message.text} </strong>
+                      <p style={{ fontSize: '9px', display: 'block' }}>
+                        {formatTimestamp(message.timeStamp)}
+                      </p>
                     </div>
                   ))}
                 </div>
