@@ -172,7 +172,7 @@ export default function ChatOfTrainer() {
     return <pre>{JSON.stringify(trainersQuery.error)}</pre>;
 
   return (
-    <div className={`${styles.mainContainer}`}>
+    <div className={`${`container ${styles.mainContainer}`}`}>
       <div className={`container mt-5 ${styles.chatContainer}`}>
         <div className="row">
           <div className="col-3">

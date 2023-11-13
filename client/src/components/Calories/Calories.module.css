@@ -3,9 +3,7 @@
 body {
     font-family: "Nunito", sans-serif !important;
     color: #ffffff;
-    background-image: url("../assets/images/gym/bg2.jpg") !important;
-    background-repeat: no-repeat;
-    background-size: cover;
+   
 }
 
 #ingredient {

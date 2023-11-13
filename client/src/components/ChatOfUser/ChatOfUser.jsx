@@ -147,7 +147,7 @@ export default function ChatOfUser() {
     return <pre>{JSON.stringify(usersQuery.error)}</pre>;
 
   return (
-    <div className={`${styles.mainContainer}`}>
+    <div className={`container mb-3 ${`${styles.mainContainer}`}`}>
       <div className={`container mt-5 ${styles.chatContainer}`}>
         <div className="row">
           <div className="col-3">
