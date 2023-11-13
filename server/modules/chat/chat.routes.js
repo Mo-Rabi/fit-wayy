@@ -1,5 +1,9 @@
-import express from "express";
+// routes/messageRoutes.js
+import { Router } from 'express';
+const router = Router();
+import {  sendMessage } from './chat.controller.js';
 
-const chatRoutes = express.Router();
+// Send a new message
+router.post('/sendMessages', sendMessage);
 
-chatRoutes.get("")
+export default router;

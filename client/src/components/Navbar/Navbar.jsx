@@ -47,7 +47,6 @@ export default function Navbar() {
                   </span>
                 </div>
               </Link>
-              <Link to={'/chat'}><i class="fa-brands fa-rocketchat btn btn-icon btn-pills btn-light ms-2"></i></Link>
             </li>
           ) : (
             <li className="list-inline-item mb-0">

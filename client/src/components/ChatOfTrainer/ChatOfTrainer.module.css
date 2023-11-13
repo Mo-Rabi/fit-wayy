@@ -5,9 +5,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 15%;
 }
 .chatContainer{
-    height: 85vh;
+    height: fit-content;
     width: 85vw;
-    background-color: #364c57;
+    background-color: #475d68;
+}
+.usersNames{
+    list-style: none;
 }

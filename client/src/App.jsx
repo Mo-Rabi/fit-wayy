@@ -13,7 +13,8 @@ import TrainerSettings from "./components/TrainerSettings/TrainerSettings";
 import ViewTrainer from "./components/ViewTrainer/ViewTrainer";
 import Home from "./components/Home/Home";
 import SearchForMore from "./components/SearchForMore/SearchForMore"
-import Chat from './components/Chat/Chat'
+import ChatOfTrainer from './components/ChatOfTrainer/ChatOfTrainer'
+import NotFound from './components/NotFound/NotFound'
 //import Cloudinary from "./components/Cloudinary/Cloudinary";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./components/assets/css/style.min.css";
@@ -27,6 +28,7 @@ import "./components/assets/js/app";
 import "./components/assets/js/easy_background";
 import "./components/assets/js/plugins.init";
 import VerificationSuccess from "./components/VerificationSuccess/VerificationSuccess";
+import ChatOfUser from "./components/ChatOfUser/ChatOfUser";
 
 function App() {
   const routes = createBrowserRouter([
@@ -44,8 +46,12 @@ function App() {
           element: <SearchForMore />,
         },
         {
-          path: "chat",
-          element: <Chat />,
+          path: "trainer/chatOfTrainer",
+          element: <ChatOfTrainer />,
+        },
+        {
+          path: "user/chatOfUser",
+          element: <ChatOfUser />,
         },
         {
           path: "trainers/register",
@@ -94,6 +100,7 @@ function App() {
 
         { path: "trainer/settings", element: <TrainerSettings /> },
         { path: "verification/success", element: <VerificationSuccess /> },
+        { path: "*", element: <NotFound /> },
       ],
     },
   ]);

@@ -130,7 +130,7 @@ export default function TrainerProfile() {
                             </li>
                             <li className="list-inline-item me-1">
                               <Link
-                                to={'/chat'}
+                                to={'/trainer/chatOfTrainer'}
                                 className="rounded"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="bottom"
@@ -267,7 +267,7 @@ export default function TrainerProfile() {
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
                       <Link
-                        to={'/chat'}
+                        to={'/trainer/chatOfTrainer'}
                         className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
                       >
                         <span className="h4 mb-0">
