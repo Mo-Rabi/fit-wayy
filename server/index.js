@@ -7,6 +7,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 import fse from "fs-extra";
+import allExercise from "./modules/Exercise/allExercise.routes.js";
+import exerciseRouter from "./modules/Exercise/exercise.routes.js";
 
 const app = express();
 
@@ -67,8 +69,9 @@ app.use(express.urlencoded({ extended: false }));
 //   //}
 // //});
 app.use(cookieParser());
+app.use('/allExercise',allExercise);
 
 app.use(userRoutes);
 app.use(trainerRoutes);
-
+app.use(exerciseRouter);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

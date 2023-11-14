@@ -43,6 +43,26 @@ export default function ViewTrainer({setPrice}) {
     }
   };
 
+  const handleBooking = (trainerId, trainerFirstName, trainerLastName) => {
+    // Make an HTTP request to the server-side endpoint to insert the booking data
+    axios.post('/', {
+      trainerId,
+      trainerFirstName,
+      trainerLastName,
+    })
+      .then(response => {
+        // Handle successful booking response
+        console.log('Booking successful!');
+        // Redirect to the PayPal page
+        window.location.href = '/paypal';
+      })
+      .catch(error => {
+        // Handle booking error
+        console.error('Booking failed:', error);
+      });
+  };
+  
+
   //? Navigate to trainer profile
   const navigate = useNavigate();
 
@@ -63,6 +83,17 @@ export default function ViewTrainer({setPrice}) {
       setFavorites(updatedFavorites);
     }
   };
+
+  //Function send id and user name
+  async function sendData(id,firstName,lastName){
+    let {data}=await axios.post(`url`,{
+      _id:id,
+      firstName:firstName,
+      lastName:lastName
+
+    });
+
+  }
 
   // Save favorites to local storage whenever it changes
   useEffect(() => {
@@ -148,7 +179,7 @@ export default function ViewTrainer({setPrice}) {
               {trainer.rating}
             </p>
             <p className="text-white fw-bold">Trainees no.: *Placeholder*</p>
-            <Link to={"/paypal"}><button className="btn btn-success ">Book now!</button></Link>
+            <Link onClick={() => handleBooking(trainer._id, trainer.firstName, trainer.lastName)} to={"/paypal"}><button className="btn btn-success ">Book now!</button></Link>
 
           </div>
         </div>

@@ -5,4 +5,4 @@ const exerciseRouter = express.Router();
 exerciseRouter.post("/addExer/:id", addExercise);
 exerciseRouter.get("/getAll", getAllExercise);
 
-export default exerciseRouter
+export default exerciseRouter ;

@@ -28,7 +28,7 @@ import "./components/assets/js/plugins.init";
 import VerificationSuccess from "./components/VerificationSuccess/VerificationSuccess";
 import Paypal from "./components/paypal/paypal";
 import {useState } from "react";
-
+import Reports from "./components/reports/reports";
 
 function App() {
   const [price, setPrice] = useState(0);
@@ -89,6 +89,7 @@ function App() {
         { path: "trainer/settings", element: <TrainerSettings /> },
         { path: "verification/success", element: <VerificationSuccess /> },
         {path:"paypal" , element:<Paypal price={price}/>},
+        {path:"reports" , element:<Reports/>},
       ],
     },
   ]);

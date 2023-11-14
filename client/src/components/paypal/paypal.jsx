@@ -8,6 +8,10 @@ export default function Paypal({price}) {
     const [onApproveMessage, setOnApproveMessage] = useState("");
     const [onErrorMessage, setOnErrorMessage] = useState("");
   
+
+   
+    
+
     const createOrder = (data, actions) => {
       const amount = document.getElementById("amount").value;
       console.log("Creating order for amount", amount);
@@ -31,6 +35,8 @@ export default function Paypal({price}) {
     const onApprove = (data, actions) => {
       return actions.order.capture().then((details) => {
         setOnApproveMessage(`Transaction completed by ${details.payer.name.given_name}!`);
+        window.location.href = "user/profile"; // Redirect to '/user' page
+
       });
     };
   
@@ -63,11 +69,7 @@ export default function Paypal({price}) {
                 <label htmlFor="amount">Order Amount: </label>
               </th>
               <td>
-                <select name="amount" id="amount">
-                  <option value="2.00">$2.00</option>
-                  <option value="4.00">$4.00</option>
-                  <option value="6.00">$6.00</option>
-                </select>
+             {price}
               </td>
             </tr>
             <tr>
