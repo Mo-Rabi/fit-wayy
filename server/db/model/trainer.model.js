@@ -51,6 +51,7 @@ const trainerSchema = new mongoose.Schema(
     isDeleted: { type: Boolean, default: false },
     messages: [
       {
+        sender: String,
         recipient: String,
         text: String,
         timeStamp: Date

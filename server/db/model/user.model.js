@@ -53,6 +53,7 @@ const userSchema = new mongoose.Schema(
     messages: [
       {
         sender: String,
+        recipient: String,
         text: String,
         timeStamp: Date,
       },
