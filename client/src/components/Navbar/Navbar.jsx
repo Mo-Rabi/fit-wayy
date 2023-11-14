@@ -88,7 +88,6 @@ export default function Navbar() {
               <Link to={"user/plan"} className="sub-menu-item">
                 Services
               </Link>
-              <li>
           </li>
 
             <li className="has-submenu parent-parent-menu-item">
