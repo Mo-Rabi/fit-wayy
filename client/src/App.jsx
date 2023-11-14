@@ -29,6 +29,7 @@ import "./components/assets/js/easy_background";
 import "./components/assets/js/plugins.init";
 import VerificationSuccess from "./components/VerificationSuccess/VerificationSuccess";
 import Gymplans from "./components/gymplans/gymplans";
+
 import ChatOfUser from "./components/ChatOfUser/ChatOfUser";
 
 
