@@ -20,7 +20,7 @@ export default function NotFound() {
           <img src={error} className="img-fluid" alt />
           <div className="text-uppercase mt-4 display-3">Oh ! no</div>
           <div className="text-capitalize text-dark mb-4 error-page">Page Not Found</div>
-          <p className="text-muted para-desc mx-auto">Start working with <span className="text-primary fw-bold">FitWay</span> that can provide everything you need to generate awareness, drive traffic, connect.</p>
+          <p className="text-muted para-desc mx-auto">Start working with <span className="text-primary fw-bold">FitWay</span> that can provide everything you need to increase tolerance, drive stamina, gain muscles.</p>
         </div>{/*end col*/}
       </div>{/*end row*/}
       <div className="row">

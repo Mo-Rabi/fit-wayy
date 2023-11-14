@@ -75,7 +75,7 @@ export default function ViewTrainer() {
       return userData;
     },
   });
-  
+
   console.log("USER DETAILS OUTSIDE: ", userDataQuery.data);
 
   //?Track server response message and status
@@ -88,20 +88,29 @@ export default function ViewTrainer() {
   // axios.defaults.headers.common["Authorization"] = token;
   const onSubmit = async (data) => {
     try {
-      console.log("Data", data);
-      data.userToken = localStorage.getItem("token"); //User/ Reviewer Token (Logged in)
-      data.trainerId = trainerId;
-      data.reviewerFirstName = userDataQuery.data.firstName;
-      data.reviewerLastName = userDataQuery.data.lastName;
-      data.reviewerProfilePhoto = userDataQuery.data.picture;
-      console.log("Data", data);
+      if (userType === "trainer") {
+        toast.error("Trainer can't post reviews!");
+      } else if (userType === "user") {
+        console.log("Data", data);
+        data.userToken = localStorage.getItem("token"); //User/ Reviewer Token (Logged in)
+        data.trainerId = trainerId;
+        data.reviewerFirstName = userDataQuery.data.firstName;
+        data.reviewerLastName = userDataQuery.data.lastName;
+        data.reviewerProfilePhoto = userDataQuery.data.picture;
+        console.log("Data", data);
 
-      //!Send review details to Reviews Collection in DB
-      let response = await axios.post(
-        "http://localhost:4000/reviews/new",
-        data
-      );
-      console.log("Response", response.data.message);
+        //!Send review details to Reviews Collection in DB
+        let response = await axios.post(
+          "http://localhost:4000/reviews/new",
+          data
+        );
+        console.log("Response", response.data.message);
+        // Fetch the reviews again
+        reviewDataQuery.refetch();
+        toast.success("Thank you for sharing your experience!");
+      } else {
+        toast.success("Please log in first!");
+      }
     } catch (error) {
       let errorMsg = error.response.data.error.message;
       let errorStatus = error.response.status;
@@ -215,11 +224,12 @@ export default function ViewTrainer() {
             </p>
             <p className="text-white fw-bold">
               {" "}
-              Rating:{" "}
+              Rating: {trainer.rating}
               <FontAwesomeIcon icon={faStar} style={{ color: "#f9be1a" }} />
-              {trainer.rating}
             </p>
-            <p className="text-white fw-bold">Trainees no.: *Placeholder*</p>
+            <p className="text-white fw-bold">
+              Trainees no.: {Math.random().toFixed(1) * 100}
+            </p>
             <button className="btn btn-success" onClick={handleBookNowBtn}>
               Book now!
             </button>
@@ -281,7 +291,7 @@ export default function ViewTrainer() {
                       className="rounded-circle shadow-1-strong me-3"
                       src={
                         userDataQuery?.data?.picture ||
-                        trainer?.picture ||
+                      //  trainer?.picture ||
                         "https://upload.wikimedia.org/wikipedia/commons/2/2f/No-photo-m.png"
                       }
                       alt="avatar"

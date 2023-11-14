@@ -53,7 +53,7 @@ export default function Navbar() {
             <li className="list-inline-item mb-0">
               <Link
                 to={"/users/login"}
-                data-bs-toggle="offcanvas"
+               // data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasRight"
                 aria-controls="offcanvasRight"
               >
