@@ -49,10 +49,18 @@ const trainerSchema = new mongoose.Schema(
       default: false,
     },
     isDeleted: { type: Boolean, default: false },
+    messages: [
+      {
+        recipient: String,
+        text: String,
+        timeStamp: Date
+      },
+    ]
   },
   {
     timestamps: true,
-  }
+  },
+
 );
 
 const trainerModel = mongoose.model("Trainer", trainerSchema);
