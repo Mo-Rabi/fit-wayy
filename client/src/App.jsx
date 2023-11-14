@@ -28,6 +28,8 @@ import "./components/assets/js/app";
 import "./components/assets/js/easy_background";
 import "./components/assets/js/plugins.init";
 import VerificationSuccess from "./components/VerificationSuccess/VerificationSuccess";
+import Gymplans from "./components/gymplans/gymplans";
+
 import ChatOfUser from "./components/ChatOfUser/ChatOfUser";
 
 
@@ -97,6 +99,11 @@ function App() {
           path: "user/profile",
           element: <UserProfile />,
         },
+        {
+          path: "user/plan",
+          element: <Gymplans />,
+        },
+
         { path: "user/settings", element: <UserSettings /> },
 
         { path: "trainer/settings", element: <TrainerSettings /> },

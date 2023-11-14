@@ -84,6 +84,12 @@ export default function Navbar() {
                 Trainers
               </Link>
             </li>
+            <li>
+              <Link to={"user/plan"} className="sub-menu-item">
+                Services
+              </Link>
+          </li>
+
             <li className="has-submenu parent-parent-menu-item">
               <a href="/user/searchForMore">Nutrition & Exercises</a>
             </li>
