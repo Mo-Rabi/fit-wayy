@@ -89,7 +89,7 @@ export default function ViewTrainer() {
   const onSubmit = async (data) => {
     try {
       if (userType === "trainer") {
-        toast.error("Trainer can't post reviews!");
+        toast.error("Trainers can't post reviews!");
       } else if (userType === "user") {
         console.log("Data", data);
         data.userToken = localStorage.getItem("token"); //User/ Reviewer Token (Logged in)
@@ -291,7 +291,7 @@ export default function ViewTrainer() {
                       className="rounded-circle shadow-1-strong me-3"
                       src={
                         userDataQuery?.data?.picture ||
-                      //  trainer?.picture ||
+                        //  trainer?.picture ||
                         "https://upload.wikimedia.org/wikipedia/commons/2/2f/No-photo-m.png"
                       }
                       alt="avatar"
