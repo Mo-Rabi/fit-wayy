@@ -88,10 +88,8 @@ const userSignUpVerification = async (req, res) => {
     );
     console.log("User Verified: ", user);
 
-    // Redirect user to login page or send a response
-    res.json({
-      message: "User Email verification successful. You can now log in.",
-    });
+    // Redirect trainer to login page or send a response
+    res.redirect("http://localhost:3000/verification/success");
   } catch (error) {
     console.log("User Signup Verification Error: ", error);
   }
