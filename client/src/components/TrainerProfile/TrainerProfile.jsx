@@ -39,7 +39,7 @@ export default function TrainerProfile() {
   const trainerDataQuery = useQuery({
     queryKey: ["trainerData"],
     queryFn: async () => {
-      let { data } = await axios.get("http://localhost:4000/trainerData");
+      let { data } = await axios.get("http://localhost:4000/trainerData/");
       console.log("Data", data);
       const trainerData = data.trainerData;
       console.log("Trainer Data: ", trainerData);
@@ -53,6 +53,7 @@ export default function TrainerProfile() {
 
   const Logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userType");
     window.location.href = "/";
   };
   return (
@@ -129,15 +130,15 @@ export default function TrainerProfile() {
                               </a>
                             </li>
                             <li className="list-inline-item me-1">
-                              <a
-                                href=""
+                              <Link
+                                to={'/trainer/chatOfTrainer'}
                                 className="rounded"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="bottom"
                                 title="Messages"
                               >
                                 <i className="uil uil-comment align-middle" />
-                              </a>
+                              </Link>
                             </li>
                             <li className="list-inline-item me-1">
                               <a
@@ -151,15 +152,15 @@ export default function TrainerProfile() {
                               </a>
                             </li>
                             <li className="list-inline-item me-1">
-                              <a
-                                href="account-setting.html"
+                              <Link
+                                to={"/trainer/settings"}
                                 className="rounded"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="bottom"
                                 title="Settings"
                               >
                                 <i className="uil uil-cog align-middle" />
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                           {/*end icon*/}
@@ -229,10 +230,7 @@ export default function TrainerProfile() {
                     id="navmenu-nav"
                   >
                     <li className="navbar-item account-menu px-0">
-                      <a
-                        href="account-profile.html"
-                        className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
-                      >
+                      <a className="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
                         <span className="h4 mb-0">
                           <i className="uil uil-dashboard" />
                         </span>
@@ -266,15 +264,15 @@ export default function TrainerProfile() {
                       </a>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
-                      <a
-                        href="account-chat.html"
+                      <Link
+                        to={'/trainer/chatOfTrainer'}
                         className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
                       >
                         <span className="h4 mb-0">
                           <i className="uil uil-comment" />
                         </span>
                         <h6 className="mb-0 ms-2">Chat</h6>
-                      </a>
+                      </Link>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
                       <a

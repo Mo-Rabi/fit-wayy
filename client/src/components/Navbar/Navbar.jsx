@@ -7,6 +7,7 @@ import "../assets/sass/_topbar.scss";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
+  const userType = localStorage.getItem("userType");
   const token = localStorage.getItem("token");
   return (
     <header id="topnav" className="defaultscroll sticky mb-5">
@@ -34,7 +35,7 @@ export default function Navbar() {
         <ul className="buy-button list-inline mb-0">
           {token ? (
             <li className="list-inline-item ps-1 mb-0">
-              <Link to={"/trainer/profile"}>
+              <Link to={`/${userType}/profile`}>
                 <div className="login-btn-primary">
                   <span className="btn btn-icon btn-pills btn-primary">
                     <User />
@@ -50,8 +51,8 @@ export default function Navbar() {
             </li>
           ) : (
             <li className="list-inline-item mb-0">
-              <Link to={"/trainers/login"}
-
+              <Link
+                to={"/users/login"}
                 data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasRight"
                 aria-controls="offcanvasRight"
@@ -126,6 +127,12 @@ export default function Navbar() {
                 </li>
               </ul>
             </li>
+            <li>
+              <Link to={"/trainers/register"} href="corporate-services.html" className="sub-menu-item text-danger">
+                {!token?"Become A Trainer":null}
+              </Link>
+            </li>
+
           </ul>
         </div>
       </div>

@@ -33,14 +33,15 @@ export default function UserProfile() {
   const queryClient = useQueryClient();
   const token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = token;
-let firstName
+  let firstName;
   //! Retrieve User Details
   const userDataQuery = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
       let { data } = await axios.get("http://localhost:4000/userData");
       const userData = data.userData;
-      console.log();
+      console.log("USER DATA IN PROFILE", userData);
+      localStorage.setItem("userData", JSON.stringify(userData));
       return userData;
     },
   });
@@ -48,6 +49,12 @@ let firstName
   if (userDataQuery.isLoading) return <h1>Loading...</h1>;
   if (userDataQuery.isError)
     return <pre>{JSON.stringify(userDataQuery.error)}</pre>;
+
+  const Logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userType");
+    window.location.href = "/";
+  };
   return (
     <div>
       {/* Hero Start */}
@@ -66,7 +73,7 @@ let firstName
                   <div className="row align-items-center">
                     <div className="col-lg-2 col-md-3 text-md-start text-center">
                       <img
-                        src={clientPhoto}
+                        src={userDataQuery.data.picture}
                         className="avatar avatar-large rounded-circle shadow d-block mx-auto"
                       />
                     </div>
@@ -144,15 +151,15 @@ let firstName
                               </a>
                             </li>
                             <li className="list-inline-item">
-                              <a
-                                href="account-setting.html"
+                              <Link
+                                to={"/user/settings"}
                                 className="rounded"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="bottom"
                                 title="Settings"
                               >
                                 <i className="uil uil-cog align-middle" />
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                           {/*end icon*/}
@@ -222,15 +229,15 @@ let firstName
                     id="navmenu-nav"
                   >
                     <li className="navbar-item account-menu px-0">
-                      <a
-                        href="account-profile.html"
+                      <Link
+                        to={"/user/profile"}
                         className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
                       >
                         <span className="h4 mb-0">
                           <i className="uil uil-dashboard" />
                         </span>
                         <h6 className="mb-0 ms-2">Profile</h6>
-                      </a>
+                      </Link>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
                       <a
@@ -255,26 +262,26 @@ let firstName
                       </a>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
-                      <a
-                        href="account-chat.html"
+                      <Link
+                        to={'/user/chatOfUser'}
                         className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
                       >
                         <span className="h4 mb-0">
                           <i className="uil uil-comment" />
                         </span>
                         <h6 className="mb-0 ms-2">Chat</h6>
-                      </a>
+                      </Link>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
-                      <a
-                        href="account-messages.html"
+                      <Link
+                        to={'/user/chatOfUser'}
                         className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
                       >
                         <span className="h4 mb-0">
                           <i className="uil uil-envelope-star" />
                         </span>
                         <h6 className="mb-0 ms-2">Messages</h6>
-                      </a>
+                      </Link>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
                       <a
@@ -300,14 +307,13 @@ let firstName
                       </a>
                     </li>
                     <li className="navbar-item account-menu px-0 mt-2">
-                      <a
-                        href="auth-login-three.html"
-                        className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
-                      >
+                      <a className="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
                         <span className="h4 mb-0">
                           <i className="uil uil-dashboard" />
                         </span>
-                        <h6 className="mb-0 ms-2">Logout</h6>
+                        <h6 className="mb-0 ms-2" onClick={Logout}>
+                          Logout
+                        </h6>
                       </a>
                     </li>
                   </ul>

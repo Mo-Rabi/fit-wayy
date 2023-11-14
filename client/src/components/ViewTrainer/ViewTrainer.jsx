@@ -3,43 +3,113 @@ import styles from "./ViewTrainer.module.css";
 import bg from "../assets/images/gym/bg2.jpg";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
 
 import StarIcon from "@mui/icons-material/Star";
 import { useForm, Controller } from "react-hook-form";
+import { Toaster, toast } from "sonner";
 
 export default function ViewTrainer() {
+  // const queryClient = useQueryClient();
+
+  // // Invalidate every query in the cache
+  // queryClient.invalidateQueries();
+  // // Invalidate every query with a key that starts with `todos`
+  // // queryClient.invalidateQueries({ queryKey: ["todos"] });
+
+  //! Get trainer ID from Params if the logged in was user
+  const trainerId = useParams().id;
+  console.log("Trainer", trainerId);
+
+  //TODO Write a function to query data base to retrieve the current trainer reviews and Display them
+  //! Retrieve Review Details
+  const reviewDataQuery = useQuery({
+    queryKey: ["reviewData"],
+    queryFn: async () => {
+      let { data } = await axios.get(
+        `http://localhost:4000/trainer/reviews/${trainerId}`
+      );
+      const reviewsData = data.allReviews;
+      console.log("Reviews Data", reviewsData);
+      return reviewsData;
+    },
+  });
+
+  //? Reviews array of objects
+  let reviews = reviewDataQuery.data;
+  console.log("Reviews Outside", reviews);
+
+  //? This is the token of the person logged in, Trainer or User
+  const token = localStorage.getItem("token");
+  axios.defaults.headers.common["Authorization"] = token;
+
+  //? Get user Type
+  const userType = localStorage.getItem("userType");
+  console.log("TYPE: ", userType);
+  //? Handlde Book now button click for guest and user
+  const handleBookNowBtn = () => {
+    if (!token) {
+      toast.error(
+        "Log in to start booking Trainers!"
+        //, { description: "Monday" }
+      );
+    }
+    if (userType === "trainer") {
+      toast.error("Trainer accounts can't book other Trainers!");
+    }
+  };
+
+  //! Retrieve User Details
+  const userDataQuery = useQuery({
+    queryKey: ["userData"],
+    queryFn: async () => {
+      let { data } = await axios.get("http://localhost:4000/userData");
+      console.log("USER DATA DESTRUCT: ", data);
+      const userData = data.userData;
+      console.log("USer Data", userData);
+      return userData;
+    },
+  });
+  
+  console.log("USER DETAILS OUTSIDE: ", userDataQuery.data);
+
   //?Track server response message and status
   let [apiResponse, setApiResponse] = useState({ message: "", status: "" });
   //? Gather review data and send to the server to save in DB
   const { register, handleSubmit, control } = useForm();
 
-  //? Token For Authorization
-  const token = localStorage.getItem("token");
-  axios.defaults.headers.common["Authorization"] = token;
+  // //? Token For Authorization
+  // const token = localStorage.getItem("token");
+  // axios.defaults.headers.common["Authorization"] = token;
   const onSubmit = async (data) => {
     try {
       console.log("Data", data);
+      data.userToken = localStorage.getItem("token"); //User/ Reviewer Token (Logged in)
+      data.trainerId = trainerId;
+      data.reviewerFirstName = userDataQuery.data.firstName;
+      data.reviewerLastName = userDataQuery.data.lastName;
+      data.reviewerProfilePhoto = userDataQuery.data.picture;
+      console.log("Data", data);
 
-      let response = await axios.patch(
-        "http://localhost:4000/trainer/edit",
+      //!Send review details to Reviews Collection in DB
+      let response = await axios.post(
+        "http://localhost:4000/reviews/new",
         data
       );
       console.log("Response", response.data.message);
     } catch (error) {
       let errorMsg = error.response.data.error.message;
       let errorStatus = error.response.status;
-      setApiResponse({
-        message: errorMsg,
-        status: errorStatus,
-      });
-      console.log("Api Res: ".apiResponse);
+      //   setApiResponse({
+      //     message: errorMsg,
+      //     status: errorStatus,
+      //   });
+      //   console.log("Api Res: ".apiResponse);
     }
   };
 
@@ -76,8 +146,11 @@ export default function ViewTrainer() {
   const trainerDataQuery = useQuery({
     queryKey: ["trainerProfile", id],
     queryFn: async () => {
+      console.log("ID TO PUT IN REQ", id);
       let { data } = await axios.get(`http://localhost:4000/trainerData/${id}`);
+      console.log("Trainer Data", data);
       const trainerData = data.trainerData;
+      console.log("Trainer Data");
       return trainerData;
     },
   });
@@ -126,7 +199,7 @@ export default function ViewTrainer() {
           </div>
         </div>
 
-        <div className="col-lg-4 col-md-6" style={{ margin: "10% 0% 0% 5%" }}>
+        <div className="col-lg-4 col-md-6" style={{ margin: "10% 0% 15% 5%" }}>
           <div className="content pt-3 pb-3">
             <h5 className="mb-3">
               <a href="#" className="name">
@@ -147,72 +220,112 @@ export default function ViewTrainer() {
               {trainer.rating}
             </p>
             <p className="text-white fw-bold">Trainees no.: *Placeholder*</p>
-            <button className="btn btn-success">Book now!</button>
+            <button className="btn btn-success" onClick={handleBookNowBtn}>
+              Book now!
+            </button>
           </div>
         </div>
-        <div className="row d-flex justify-content-center mb-5">
-          <div className="col-md-10 col-lg-8 col-xl-6">
-            <div className="text-white mb-5">
-              <p>Previous Reviews:</p>
-              {trainer.reviews || "No reviews yet."}
-            </div>
-            {apiResponse.message == "jwt must be provided" ? (
-              <div className="alert alert-danger p-1 text-center ">
-                <i className="fa fa-triangle-exclamation fa-bounce "></i>&nbsp;
-                Please Login to Review {trainer.firstName}'s Profile!"
+        {token ? (
+          <div className="row d-flex justify-content-center mb-5 mt-5">
+            <div className="col-md-10 col-lg-8 col-xl-6">
+              <div className="text-white mb-5">
+                <p>Previous Reviews:</p>
+                {reviews.length != 0
+                  ? reviews.map((review, index) => (
+                      <div
+                        key={index}
+                        className="tiny-slide wow animate__animated animate__fadeInUp"
+                        data-wow-delay=".5s"
+                      >
+                        <div className="d-flex client-testi m-1">
+                          <img
+                            src={review.reviewerProfilePhoto}
+                            className="avatar avatar-small client-image rounded shadow"
+                            alt
+                          />
+                          <div className="card flex-1 content p-3 shadow rounded position-relative">
+                            <ul className="list-unstyled mb-0 fw-bold">
+                              {review.rating}
+                              <FontAwesomeIcon
+                                icon={faStar}
+                                style={{ color: "#f9be1a" }}
+                              />
+                            </ul>
+                            <p className="text-muted mt-2">{review.comment}</p>
+                            <h6 className="text-primary">
+                              - {review.reviewerFirstName}{" "}
+                              {review.reviewerLastName}
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                      // <div key={index}>
+                      //   <p>Reviewer ID: {review.reviewerId}</p>
+                      //   <p>Rating: {review.rating}</p>
+                      //   <p>Comment: {review.comment}</p>
+                      // </div>
+                    ))
+                  : "No reviews yet."}
               </div>
-            ) : null}
+              {apiResponse.message == "jwt must be provided" ? (
+                <div className="alert alert-danger p-1 text-center ">
+                  <i className="fa fa-triangle-exclamation fa-bounce "></i>
+                  &nbsp; Please Login to Review {trainer.firstName}'s Profile!"
+                </div>
+              ) : null}
 
-            <div className="card">
-              <div className="card-body p-4">
-                <div className="d-flex flex-start w-100">
-                  <img
-                    className="rounded-circle shadow-1-strong me-3"
-                    src={
-                      "https://upload.wikimedia.org/wikipedia/commons/2/2f/No-photo-m.png" ||
-                      user.picture
-                    }
-                    alt="avatar"
-                    width={65}
-                    height={65}
-                  />
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <h5>Add a Review</h5>
-                    <Controller
-                      control={control}
-                      name="rating"
-                      defaultValue={-1}
-                      render={({ field: { onChange, value } }) => (
-                        <Rating
-                          name="rating"
-                          onChange={onChange}
-                          value={Number(value)}
-                          icon={<StarIcon fontSize={"inherit"} />}
-                          emptyIcon={
-                            <StarIcon
-                              style={{ opacity: 0.55 }}
-                              fontSize="inherit"
-                            />
-                          }
-                        />
-                      )}
+              <div className="card">
+                <div className="card-body p-4">
+                  <div className="d-flex flex-start w-100">
+                    <img
+                      className="rounded-circle shadow-1-strong me-3"
+                      src={
+                        userDataQuery?.data?.picture ||
+                        trainer?.picture ||
+                        "https://upload.wikimedia.org/wikipedia/commons/2/2f/No-photo-m.png"
+                      }
+                      alt="avatar"
+                      width={65}
+                      height={65}
                     />
-                    <div className="form-outline">
-                      <textarea
-                        className="form-control"
-                        id="textAreaExample"
-                        rows={4}
-                        defaultValue={""}
-                        {...register("comment")}
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      <h5>Add a Review</h5>
+                      <Controller
+                        control={control}
+                        name="rating"
+                        defaultValue={-1}
+                        render={({ field: { onChange, value } }) => (
+                          <Rating
+                            name="rating"
+                            onChange={onChange}
+                            value={Number(value)}
+                            icon={<StarIcon fontSize={"inherit"} />}
+                            emptyIcon={
+                              <StarIcon
+                                style={{ opacity: 0.55 }}
+                                fontSize="inherit"
+                              />
+                            }
+                          />
+                        )}
                       />
-                    </div>
-                    <div className="d-flex justify-content-between mt-3">
-                      <Button variant="contained" type="submit">
-                        Submit Review
-                      </Button>
-                    </div>
-                  </form>
-                  {/* <div className="w-100">
+                      <div className="form-outline">
+                        <textarea
+                          className="form-control"
+                          id="textAreaExample"
+                          rows={4}
+                          cols={40}
+                          defaultValue={""}
+                          {...register("comment")}
+                        />
+                      </div>
+                      <div className="d-flex justify-content-between mt-3">
+                        <Button variant="contained" type="submit">
+                          Submit Review
+                        </Button>
+                      </div>
+                    </form>
+                    {/* <div className="w-100">
                     <h5>Add a Review</h5>
                     <Controller
                       control={control}
@@ -252,11 +365,12 @@ export default function ViewTrainer() {
                       </Button>
                     </div>
                   </div> */}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </>
   );

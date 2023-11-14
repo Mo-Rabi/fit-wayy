@@ -2,6 +2,9 @@ import express from "express";
 import { initConnection } from "./db/connection.js";
 import userRoutes from "./modules/user/user.routes.js";
 import trainerRoutes from "./modules/trainer/trainer.routes.js";
+import exerciseRoutes from "./modules/exercise/exercise.routes.js"
+import chatRoutes from './modules/chat/chat.routes.js'
+import reviewRoutes from "./modules/reviews/review.routes.js";
 import "dotenv/config.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -70,5 +73,8 @@ app.use(cookieParser());
 
 app.use(userRoutes);
 app.use(trainerRoutes);
+app.use(exerciseRoutes);
+app.use(chatRoutes)
+app.use(reviewRoutes);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

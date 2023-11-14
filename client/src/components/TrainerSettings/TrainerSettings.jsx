@@ -134,9 +134,8 @@ export default function TrainerSettings() {
     resolver: yupResolver(personalDataSchema),
   });
 
-  //
+  //! Update User Details
   const onSubmit = async (data) => {
-    // async request which may result error
     try {
       console.log("Data", data);
       let response = await axios.patch(
@@ -167,8 +166,10 @@ export default function TrainerSettings() {
   // let photo = imageURLValue;
   // console.log("Photo", photo);
 
+  //? Logout function
   const Logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userType");
     window.location.href = "/";
   };
   return (
@@ -426,9 +427,7 @@ export default function TrainerSettings() {
                         </Link>
                       </li>
                       <li className="navbar-item account-menu px-0 mt-2">
-                        <a
-                          className="navbar-link d-flex rounded shadow align-items-center py-2 px-4"
-                        >
+                        <a className="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
                           <span className="h4 mb-0">
                             <i className="uil uil-dashboard" />
                           </span>

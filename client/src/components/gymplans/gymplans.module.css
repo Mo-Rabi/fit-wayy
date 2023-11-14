@@ -25,14 +25,16 @@ height:200vh;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   display: inline-block;
+  
+}
+.liToDoList{
+  text-align: start;
+  color: rgb(123, 165, 255);
 }
 li{
-  text-align: start;
-  color: #1751cf;
+  color:rgba(4, 29, 54, 0.691)23, 23, 163;
 }
-.showExercises{
 
-}
 
 
 

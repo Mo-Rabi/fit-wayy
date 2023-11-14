@@ -68,7 +68,7 @@ export default function Gymplans() {
   return (
 
     <>
-      <div className={style.maincontainer} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', backgroundImage: `url('https://t4.ftcdn.net/jpg/04/61/47/03/360_F_461470323_6TMQSkCCs9XQoTtyer8VCsFypxwRiDGU.jpg')`, backgroundPosition: 'center', minHeight: '100vh' }}>
+      <div className={style.maincontainer} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', backgroundImage: `url('https://t4.ftcdn.net/jpg/04/61/47/03/360_F_461470323_6TMQSkCCs9XQoTtyer8VCsFypxwRiDGU.jpg')`, backgroundPosition: 'center', minHeight: '100vh'}}>
         {/*<div className='d-flex  flex-wrap'>
 {biceps.slice(0, 2).map((item)=>(
   <div key={item.id} className="card" style={{width: '18rem'}}>
@@ -383,9 +383,9 @@ export default function Gymplans() {
       {/*to do list */}
 
       <div className={style.todoContainer} style={{ backgroundImage: `url('https://t4.ftcdn.net/jpg/04/61/47/03/360_F_461470323_6TMQSkCCs9XQoTtyer8VCsFypxwRiDGU.jpg')` }}>        <h2 className='text-light'>To Do List</h2>
-        <ol  >
+        <ol  className={style.liToDoList}>
           {todos.map(({ text, Completed }, index,) => {
-            return (<div className={style.listContainer}><li onClick={() => handelItemDone(index)} className={Completed ? "text-decoration-line-through text-primary" : ""} key={index}>{text}</li>
+            return (<div className={style.listContainer}><li onClick={() => handelItemDone(index)} className={Completed ? "text-decoration-line-through  " : ""} key={index}>{text}</li>
               <span onClick={() => handelDeleteItem(index)} >❌</span></div>)
           })}
         </ol>
@@ -393,10 +393,10 @@ export default function Gymplans() {
         <button onClick={handler} className='btn btn-primary'>Add</button>
 
       </div>
-<div>
-<span className='text-capitalize fs-3 text-primary position-relative top-0 ps-3 translate-middle'>warm-up exercises</span>
+      <div>
+        <span className='text-capitalize fs-3 text-primary position-relative top-0 ps-3 translate-middle'>warm-up exercises</span>
 
-</div>
+      </div>
 
 
       <div style={{

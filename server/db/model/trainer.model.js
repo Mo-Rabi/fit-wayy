@@ -22,7 +22,13 @@ const trainerSchema = new mongoose.Schema(
     gender: { type: String, required: true },
     weight: { type: Number, required: true },
     height: { type: Number, required: true },
-    rating: { type: Number, default: 0 },
+    // reviews: [
+    //   {
+    //     reviewerId: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    //     rating: Number,
+    //     comment: String,
+    //   },
+    // ],
     trainees: { type: Array, default: [] },
     plans: { type: Array, default: [] },
     price: { type: Number, required: true },
@@ -43,10 +49,18 @@ const trainerSchema = new mongoose.Schema(
       default: false,
     },
     isDeleted: { type: Boolean, default: false },
+    messages: [
+      {
+        recipient: String,
+        text: String,
+        timeStamp: Date
+      },
+    ]
   },
   {
     timestamps: true,
-  }
+  },
+
 );
 
 const trainerModel = mongoose.model("Trainer", trainerSchema);

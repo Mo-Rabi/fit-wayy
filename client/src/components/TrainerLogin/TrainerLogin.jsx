@@ -30,6 +30,7 @@ export default function TrainerLogin() {
         "http://localhost:4000/trainers/login",
         values
       );
+      console.log("Errr", response)
       console.log("ResponseMsg: ", response.data.message);
       console.log("ResponseStatus: ", response.status);
 
@@ -48,6 +49,7 @@ export default function TrainerLogin() {
       //localStorage.setItem("userToken", data.token);
       //setToken(data.token);
       setTimeout(() => {
+        localStorage.setItem("userType", "trainer");
         window.location.href = "/trainer/profile";
       }, 3000);
       setIsLoading(false);
