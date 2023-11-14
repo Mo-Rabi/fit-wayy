@@ -105,6 +105,8 @@ export default function ViewTrainer() {
           data
         );
         console.log("Response", response.data.message);
+        // Fetch the reviews again
+        reviewDataQuery.refetch();
         toast.success("Thank you for sharing your experience!");
       } else {
         toast.success("Please log in first!");
@@ -222,9 +224,8 @@ export default function ViewTrainer() {
             </p>
             <p className="text-white fw-bold">
               {" "}
-              Rating:{" "}
+              Rating: {trainer.rating}
               <FontAwesomeIcon icon={faStar} style={{ color: "#f9be1a" }} />
-              {trainer.rating}
             </p>
             <p className="text-white fw-bold">
               Trainees no.: {Math.random().toFixed(1) * 100}
@@ -290,7 +291,7 @@ export default function ViewTrainer() {
                       className="rounded-circle shadow-1-strong me-3"
                       src={
                         userDataQuery?.data?.picture ||
-                        trainer?.picture ||
+                      //  trainer?.picture ||
                         "https://upload.wikimedia.org/wikipedia/commons/2/2f/No-photo-m.png"
                       }
                       alt="avatar"
