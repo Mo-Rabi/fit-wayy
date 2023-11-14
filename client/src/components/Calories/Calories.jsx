@@ -8,8 +8,7 @@ export default function Calories() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const apiKey = process.env.REACT_APP_API_KEY;
-  const apiUrl = `https://api.api-ninjas.com/v1/nutrition`;
+  const apiKey = "Ny0YaI88MFGFNlJDzpkCMZ3FJcBcV5KbBuY3wLyn";
 
   const fetchCaloriesData = async () => {
   const apiUrl = `https://api.api-ninjas.com/v1/nutrition`;

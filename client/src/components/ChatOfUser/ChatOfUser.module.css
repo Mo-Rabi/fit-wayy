@@ -5,31 +5,38 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 15%;
 }
 .chatContainer{
     height: fit-content;
     width: 85vw;
     background-color: #475d68;
+    border-radius: 10px;
+    box-shadow: 0.5px 1px 3px 5px  #516068 ;
 }
 .TrainersNames{
     list-style: none;
 }
 .messagecontainer {
-    border: 1px solid gray;
     margin: 2% 1%;
     padding: 1%;
+    
   }
 
+  .fixedbar {
+    position: sticky;
+    top: 0;
+    background-color: #475d68;
+    z-index: 1000;
+  }
 .usermessage {
-    background-color: #c07676; /* or any color you prefer */
+  background-color: #b9d6e9; 
     padding: 10px;
     margin: 5px;
     border-radius: 8px;
   }
   
   .trainermessage {
-    background-color: #8caabe; /* or any color you prefer */
+    background-color: #8caabe;
     padding: 10px;
     margin: 5px;
     border-radius: 8px;

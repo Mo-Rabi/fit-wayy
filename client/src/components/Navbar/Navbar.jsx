@@ -85,7 +85,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="has-submenu parent-parent-menu-item">
-              <a href="/user/searchForMore">Search for info</a>
+              <a href="/user/searchForMore">Nutrition & Exercises</a>
             </li>
             <li className="has-submenu parent-parent-menu-item">
               <a href="#">Pages</a>
